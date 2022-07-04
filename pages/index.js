@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import dynamic from "next/dynamic";
 
@@ -17,12 +16,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {/* <h1 className={styles.title}>
-          WAGDIE Map
-        </h1> */}
-
         <div className={styles.map}>
-          <MapWithNoSSR/>
+          <MapWithNoSSR />
         </div>
       </main>
     </div>

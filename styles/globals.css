@@ -7,10 +7,17 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #faebd7 !important;
   text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { 
+  background: #333 !important;
+  color: #faebd7 !important;
+  text-align: center !important;
+  font-family: Wagdie_Fraktur_21 !important;
 }
