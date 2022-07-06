@@ -14,7 +14,7 @@ export default function Home({ allLocationssData }) {
 
       <main className={styles.main}>
         <div className={styles.map}>
-          <Map data={allLocationssData} />
+          <Map mapLocations={allLocationssData} />
         </div>
       </main>
     </div>
