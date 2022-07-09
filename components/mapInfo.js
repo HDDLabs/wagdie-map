@@ -3,14 +3,7 @@ import { useMap, useLeafletContext } from "react-leaflet";
 import L from "leaflet";
 import styles from '../styles/Home.module.css'
 
-
-const legendHtmlFor = (title, description) =>
-  [
-    title && `<h3>${title}</h3>`,
-    description && `<p>${description}</p>`,
-  ].join("\n");
-
-const MapInfo = ({ title, description }) => {
+const MapInfo = ({ title, details }) => {
   const map = useMap();
 
   useEffect(() => {
@@ -21,20 +14,18 @@ const MapInfo = ({ title, description }) => {
       const legendHeaderDiv = L.DomUtil.create("div", styles.legendHeader)
       const legendTextDiv = L.DomUtil.create("div", styles.legendText)
 
-      legendHeaderDiv.innerHTML = "<h1>We Are All Going To Die</h1>"
-      legendTextDiv.innerHTML = legendHtmlFor(title, description);
+      legendHeaderDiv.innerHTML = `<h1>${title}</h1>`
+      legendTextDiv.innerHTML = `<p>${details}</p>`
 
       legendDiv.appendChild(legendHeaderDiv)
       legendDiv.appendChild(legendTextDiv)
-
-      console.log(legendDiv)
 
       return legendDiv;
     };
 
     legend.addTo(map);
     return () => legend.remove();
-  }, [title, description]);
+  }, [title, details]);
 
   return null;
 }

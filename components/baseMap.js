@@ -7,7 +7,7 @@ import MapInfo from '../components/mapInfo';
 const Leaflet = require('leaflet');
 
 const BaseMap = ({ mapLocations }) => {
-  const [selectedSite, setSelectedSite] = useState(null);
+  const [selectedSite, setSelectedSite] = useState( {title:"We Are All Going To Die"} );
   const handleSiteClick = (site) => {
     setSelectedSite(site);
   }
@@ -36,8 +36,8 @@ const BaseMap = ({ mapLocations }) => {
       crs={Leaflet.CRS.Simple}
     >
       <MapInfo
-        title={selectedSite && selectedSite.title}
-        description={selectedSite && selectedSite.description}
+        title={selectedSite == null ? "We Are All Going To Die" : selectedSite.title}
+        details={selectedSite && selectedSite.details}
       >
       </MapInfo>
 
@@ -54,7 +54,7 @@ const BaseMap = ({ mapLocations }) => {
       {mapLocations.map((location) => (
         <Marker
           key={location.title}
-          position={location.coordinates}
+          position={location.htmlcoordinates}
           icon={locationIcon}
           eventHandlers={{
             click: (e) => {
