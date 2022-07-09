@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { getWikiLocationsData, getPageContent } from '../lib/wiki';
+import { getWikiLocationsData } from '../lib/wiki';
 import Map from '../components/map';
 
 export default function Home({ allLocationssData }) {
@@ -23,7 +23,7 @@ export default function Home({ allLocationssData }) {
 
 export async function getStaticProps() {
   const allLocationssData = await getWikiLocationsData();
-  
+
   return {
     props: {
       allLocationssData: allLocationssData
