@@ -45,7 +45,7 @@ const BaseMap = ({ mapLocations }) => {
       </MapInfo>
 
       <ImageOverlay
-        url="../images/wagdiemap.jpeg"
+        url="../images/wagdiemap.png"
         bounds={imageBounds}
       />
 
