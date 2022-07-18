@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { getWikiLocationsData } from '../lib/wiki';
 import Map from '../components/map';
+import MapLegend from '../components/mapLegend';
 
 export default function Home({ allLocationssData }) {
   return (
@@ -13,6 +14,7 @@ export default function Home({ allLocationssData }) {
       </Head>
 
       <main className={styles.main}>
+        <MapLegend />
         <div className={styles.map}>
           <Map mapLocations={allLocationssData} />
         </div>

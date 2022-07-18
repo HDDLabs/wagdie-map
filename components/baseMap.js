@@ -40,11 +40,11 @@ const BaseMap = ({ mapLocations }) => {
       style={{ height: "100%", width: "100%" }}
       crs={Leaflet.CRS.Simple}
     >
-      <MapInfo
+      {/* <MapInfo
         title={selectedSite && selectedSite.title}
         details={selectedSite && selectedSite.details}
       >
-      </MapInfo>
+      </MapInfo> */}
 
       <ImageOverlay
         url="../images/wagdiemap.png"
