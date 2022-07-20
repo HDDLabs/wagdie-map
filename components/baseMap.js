@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { MapContainer, ImageOverlay, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import MapInfo from '../components/mapInfo';
+import AppContext from '../components/AppContext'
 const Leaflet = require('leaflet');
 
 const BaseMap = ({ mapLocations }) => {
-  const [selectedSite, setSelectedSite] = useState({
-    title: "We Are All Going To Die",
-    details: ""
-  });
-  const handleSiteClick = (site) => {
-    setSelectedSite(site);
+  const { setSelectedLocation } = useContext(AppContext);
+
+  const handleMarkerClick = (location) => {
+    setSelectedLocation(location)
   }
 
   const mapCenter = [500, 500]
@@ -21,13 +19,13 @@ const BaseMap = ({ mapLocations }) => {
   const ourLocationIcon = Leaflet.icon({
     iconUrl: '../images/mapicons/icon_youarehere.png',
     iconSize: [120, 106],
-    iconAnchor: [60,96]
+    iconAnchor: [60, 96]
   });
 
   const locationIcon = Leaflet.icon({
     iconUrl: '../images/mapicons/icon_location.png',
     iconSize: [40, 40],
-    iconAnchor: [20,20]
+    iconAnchor: [20, 20]
   });
 
   return (
@@ -40,12 +38,6 @@ const BaseMap = ({ mapLocations }) => {
       style={{ height: "100%", width: "100%" }}
       crs={Leaflet.CRS.Simple}
     >
-      {/* <MapInfo
-        title={selectedSite && selectedSite.title}
-        details={selectedSite && selectedSite.details}
-      >
-      </MapInfo> */}
-
       <ImageOverlay
         url="../images/wagdiemap.png"
         bounds={imageBounds}
@@ -64,7 +56,7 @@ const BaseMap = ({ mapLocations }) => {
           icon={locationIcon}
           eventHandlers={{
             click: (e) => {
-              handleSiteClick(location)
+              handleMarkerClick(location)
             },
           }}
         >
