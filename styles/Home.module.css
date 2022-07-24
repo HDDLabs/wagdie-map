@@ -41,8 +41,9 @@
   height: 80px;
   width: 500px; 
 
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 0px 8%;  
 
   cursor: pointer;
   user-select: none;
@@ -51,6 +52,7 @@
 
   top: 0;
   left: 0;
+  line-height: 0;
 }
 
 .legendTitle.h1 {
