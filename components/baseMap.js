@@ -49,7 +49,7 @@ const BaseMap = ({ mapLocations }) => {
         icon={ourLocationIcon}
       ></Marker>
 
-      {mapLocations.map((location) => (
+      {/* {mapLocations.map((location) => (
         <Marker
           key={location.title}
           position={location.htmlcoordinates}
@@ -70,7 +70,7 @@ const BaseMap = ({ mapLocations }) => {
           </Popup>
         </Marker>
       ))
-      }
+      } */}
     </MapContainer >
   )
 }
