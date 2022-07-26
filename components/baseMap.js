@@ -64,6 +64,7 @@ const BaseMap = ({ mapLocations }) => {
             closeButton={false}
           >
             <a
+              target="_blank"
               href={location.path}>
               {location.title}
             </a>
