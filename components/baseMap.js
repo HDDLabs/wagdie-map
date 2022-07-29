@@ -45,11 +45,11 @@ const BaseMap = ({ mapLocations }) => {
 
       <Marker
         key={"location"}
-        position={[566, 333]}
+        position={mapLocations.ourLocation.htmlcoordinates}
         icon={ourLocationIcon}
       ></Marker>
 
-      {mapLocations.map((location) => (
+      {mapLocations.locations.map((location) => (
         <Marker
           key={location.title}
           position={location.htmlcoordinates}
