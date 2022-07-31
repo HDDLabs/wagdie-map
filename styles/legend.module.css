@@ -1,0 +1,69 @@
+.legendContainer {
+    position: absolute;
+    bottom: 0;
+    left: 24px;
+    z-index: 1000;
+  
+    background: #222;
+  
+    width: auto;
+    height: auto;
+  
+    color: #faebd7;
+  }
+  
+  .legendTitle {
+    display: flex;
+    font-family: Wagdie_Fraktur_21;
+    height: 80px;
+    width: 500px; 
+  
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 8%;  
+  
+    cursor: pointer;
+    user-select: none;
+  
+    color: #faebd7;
+  
+    top: 0;
+    left: 0;
+    line-height: 0;
+  }
+  
+  .legendTitle.h1 {
+      letter-spacing: 0.3rem;
+      max-width: 100%;
+      padding: 20px;
+      text-overflow: ellipsis;
+      text-align: center;
+  }
+  
+  .legendContent {
+    padding: 24px 8% 24px 8%;
+    margin: 0 auto;
+    position: relative;
+    max-height: 60vh;
+    height: autopx;
+    width: 500px;
+    
+    background: #333;
+  
+    overflow-y: scroll;
+  
+    font-size: 1rem;
+    line-height: 1.25em;
+    font-weight: 300;
+    transition: height 2s ease-out;
+  }
+  
+  @media (max-width: 600px) {
+    .legendContainer {
+      left: 0;
+    }
+  
+    .legendContent, .legendTitle   {
+      width: 100vw;
+    }
+  }
