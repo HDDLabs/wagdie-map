@@ -3,7 +3,7 @@ import { MapContainer, ImageOverlay, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import AppContext from '../components/appContext'
+import AppContext from '../components/context'
 const Leaflet = require('leaflet');
 
 const BaseMap = ({ mapLocations }) => {
