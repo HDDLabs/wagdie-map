@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
 
 const DynamicMap = dynamic(() => import("./baseMap"), {
-    ssr: false,
+  ssr: false,
 });
 
 const Map = ({ mapLocations }) => {
-    return <DynamicMap mapLocations={mapLocations} ></DynamicMap>
-}
+  return <DynamicMap mapLocations={mapLocations} />;
+};
 
-export default Map
+export default Map;
