@@ -33,4 +33,5 @@ a.leaflet-control-zoom-in, a.leaflet-control-zoom-out {
 
 .leaflet-container {
   background: #000 !important;
+  z-index: 999 !important;
 }
