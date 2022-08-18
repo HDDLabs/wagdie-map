@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { MapContainer, ImageOverlay, Marker, Popup } from "react-leaflet";
+import React, { useContext } from "react";
+import { MapContainer, ImageOverlay, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
@@ -55,7 +55,7 @@ const BaseMap = ({ mapLocations }) => {
           position={location.htmlcoordinates}
           icon={locationIcon}
           eventHandlers={{
-            click: (e) => {
+            click: (_e) => {
               handleMarkerClick(location);
             },
           }}
