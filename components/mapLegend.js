@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import styles from "../styles/legend.module.css";
+import { animated, useSpring } from "react-spring";
+
 import AnimateHeight from "react-animate-height";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useSpring, animated } from "react-spring";
+import styles from "../styles/legend.module.css";
 
 export default function MapLegend({ location }) {
   const [height, setHeight] = useState(0);

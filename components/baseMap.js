@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
-import { MapContainer, ImageOverlay, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
+
+import { ImageOverlay, MapContainer, Marker } from "react-leaflet";
+import React, { useContext } from "react";
+
 import AppContext from "../components/context";
 const Leaflet = require("leaflet");
 
