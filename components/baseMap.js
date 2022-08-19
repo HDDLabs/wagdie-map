@@ -1,9 +1,12 @@
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import "leaflet-defaulticon-compatibility";
+
+import { ImageOverlay, MapContainer, Marker } from "react-leaflet";
 import React, { useContext } from "react";
-import { ImageOverlay, MapContainer, Marker, Popup } from "react-leaflet";
+
 import AppContext from "../components/context";
+
 const Leaflet = require("leaflet");
 
 const BaseMap = ({ mapLocations }) => {
@@ -55,15 +58,11 @@ const BaseMap = ({ mapLocations }) => {
           position={location.htmlcoordinates}
           icon={locationIcon}
           eventHandlers={{
-            click: (_e) => handleMarkerClick(location),
+            click: (_e) => {
+              handleMarkerClick(location);
+            },
           }}
-        >
-          <Popup closeButton={false}>
-            <a rel="noreferrer" target="_blank" href={location.path}>
-              {location.title}
-            </a>
-          </Popup>
-        </Marker>
+        ></Marker>
       ))}
     </MapContainer>
   );

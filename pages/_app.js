@@ -1,19 +1,20 @@
-import '../styles/globals.css'
-import React from 'react'
-import AppContext from '../components/context'
-import { useState } from 'react'
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {  
+import AppContext from "../components/context";
+import React from "react";
+import { useState } from "react";
+
+function MyApp({ Component, pageProps }) {
   const [selectedLocation, setSelectedLocation] = useState({
     title: "We Are All Going To Die",
-    details: ""
+    details: "",
   });
-  
+
   return (
-    <AppContext.Provider value = {{ selectedLocation, setSelectedLocation }}>
+    <AppContext.Provider value={{ selectedLocation, setSelectedLocation }}>
       <Component {...pageProps} />
     </AppContext.Provider>
   );
 }
 
-export default MyApp
+export default MyApp;

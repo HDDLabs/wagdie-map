@@ -1,10 +1,10 @@
-import Head from "next/head";
-import { useContext } from "react";
 import AppContext from "../components/context";
+import Head from "next/head";
 import Map from "../components/map";
 import MapLegend from "../components/mapLegend";
 import { getWikiLocationsData } from "../lib/wiki";
 import styles from "../styles/Home.module.css";
+import { useContext } from "react";
 
 export default function Home({ allLocationssData }) {
   const { selectedLocation } = useContext(AppContext);
@@ -18,7 +18,7 @@ export default function Home({ allLocationssData }) {
       </Head>
 
       <main className={styles.main}>
-        <MapLegend location={selectedLocation} />
+        <MapLegend location={selectedLocation}></MapLegend>
         <div className={styles.map}>
           <Map mapLocations={allLocationssData} />
         </div>
@@ -32,7 +32,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      allLocationssData,
+      allLocationssData: allLocationssData,
     },
     revalidate: 1,
   };
