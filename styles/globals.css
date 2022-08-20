@@ -21,3 +21,7 @@ a {
   text-align: center !important;
   font-family: Wagdie_Fraktur_21 !important;
 }
+
+a.leaflet-control-zoom-in, a.leaflet-control-zoom-out { 
+  color: #333 !important;
+}
