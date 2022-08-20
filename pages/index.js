@@ -5,6 +5,7 @@ import Map from '../components/map';
 import MapLegend from '../components/mapLegend';
 import { useContext } from 'react';
 import AppContext from '../components/context'
+import LayerPanel from '../components/layerPanel';
 
 
 export default function Home({ allLocationssData }) {
@@ -23,6 +24,7 @@ export default function Home({ allLocationssData }) {
           location={selectedLocation}
         >
         </MapLegend>
+        <LayerPanel></LayerPanel>
         <div className={styles.map}>
           <Map mapLocations={allLocationssData} />
         </div>
