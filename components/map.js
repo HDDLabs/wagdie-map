@@ -83,14 +83,20 @@ const BaseMap = () => {
         bounds={imageBounds}
       />
 
-      <Marker position={[540, 400]} icon={ourLocationIcon}></Marker>
+      <Marker
+        position={[540, 400]}
+        icon={ourLocationIcon}
+      ></Marker>
+
       {mapLocations.map(({ name, coordinates, link }) => (
         <Marker
           key={name}
           position={coordinates}
           icon={locationIcon}
         >
-          <Popup>
+          <Popup
+            closeButton={false}
+          >
             <a
               href={link}>
               {name}
