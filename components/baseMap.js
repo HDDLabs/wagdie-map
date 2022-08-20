@@ -20,12 +20,14 @@ const BaseMap = ({ mapLocations }) => {
 
   const ourLocationIcon = Leaflet.icon({
     iconUrl: '../images/mapicons/icon_youarehere.png',
-    iconSize: [120, 106]
+    iconSize: [120, 106],
+    iconAnchor: [60,96]
   });
 
   const locationIcon = Leaflet.icon({
     iconUrl: '../images/mapicons/icon_location.png',
-    iconSize: [40, 40]
+    iconSize: [40, 40],
+    iconAnchor: [20,20]
   });
 
   return (
@@ -50,7 +52,8 @@ const BaseMap = ({ mapLocations }) => {
       />
 
       <Marker
-        position={[572, 332]}
+        key={"location"}
+        position={[567, 332]}
         icon={ourLocationIcon}
       ></Marker>
 
