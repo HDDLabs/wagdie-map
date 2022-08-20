@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@mui/icons-material": "^5.8.4",
     "dom-parser": "^0.1.6",
     "graphql": "^16.5.0",
     "leaflet": "^1.8.0",
@@ -19,7 +20,8 @@
     "react": "18.2.0",
     "react-animate-height": "^3.0.4",
     "react-dom": "18.2.0",
-    "react-leaflet": "^4.0.1"
+    "react-leaflet": "^4.0.1",
+    "react-spring": "^9.5.2"
   },
   "devDependencies": {
     "eslint": "8.18.0",
