@@ -4,7 +4,7 @@ import { getWikiLocationsData } from '../lib/wiki';
 import Map from '../components/map';
 import MapLegend from '../components/mapLegend';
 import { useContext } from 'react';
-import AppContext from '../components/AppContext'
+import AppContext from '../components/appContext'
 
 
 export default function Home({ allLocationssData }) {

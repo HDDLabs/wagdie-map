@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import React from 'react'
-import AppContext from '../components/AppContext'
+import AppContext from '../components/appContext'
 import { useState } from 'react'
 
 function MyApp({ Component, pageProps }) {  
