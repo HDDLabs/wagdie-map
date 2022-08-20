@@ -7,7 +7,7 @@ body {
 }
 
 a {
-  color: #faebd7 !important;
+  color: #90caf9 !important;
   text-decoration: none;
 }
 
@@ -20,6 +20,11 @@ a {
   color: #faebd7 !important;
   text-align: center !important;
   font-family: Wagdie_Fraktur_21 !important;
+}
+
+.leaflet-container a { 
+  color: #faebd7 !important;
+  text-decoration: none;
 }
 
 a.leaflet-control-zoom-in, a.leaflet-control-zoom-out { 
