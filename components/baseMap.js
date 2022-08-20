@@ -1,31 +1,34 @@
 import React, { useState, useContext, useEffect } from "react";
-import { MapContainer, ImageOverlay, Marker, Popup } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
+import { MapContainer, ImageOverlay, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import AppContext from '../components/context'
-const Leaflet = require('leaflet');
+import AppContext from "../components/context";
+const Leaflet = require("leaflet");
 
 const BaseMap = ({ mapLocations }) => {
   const { setSelectedLocation } = useContext(AppContext);
 
   const handleMarkerClick = (location) => {
-    setSelectedLocation(location)
-  }
+    setSelectedLocation(location);
+  };
 
-  const mapCenter = [500, 500]
-  const imageBounds = [[0, 0], [1000, 1000]]
+  const mapCenter = [500, 500];
+  const imageBounds = [
+    [0, 0],
+    [1000, 1000],
+  ];
 
   const ourLocationIcon = Leaflet.icon({
-    iconUrl: '../images/mapicons/icon_youarehere.png',
+    iconUrl: "../images/mapicons/icon_youarehere.png",
     iconSize: [120, 106],
-    iconAnchor: [60, 96]
+    iconAnchor: [60, 96],
   });
 
   const locationIcon = Leaflet.icon({
-    iconUrl: '../images/mapicons/icon_location.png',
+    iconUrl: "../images/mapicons/icon_location.png",
     iconSize: [40, 40],
-    iconAnchor: [20, 20]
+    iconAnchor: [20, 20],
   });
 
   return (
@@ -38,10 +41,7 @@ const BaseMap = ({ mapLocations }) => {
       style={{ height: "100%", width: "100%" }}
       crs={Leaflet.CRS.Simple}
     >
-      <ImageOverlay
-        url="../images/wagdiemap.png"
-        bounds={imageBounds}
-      />
+      <ImageOverlay url="../images/wagdiemap.png" bounds={imageBounds} />
 
       <Marker
         key={"location"}
@@ -56,15 +56,13 @@ const BaseMap = ({ mapLocations }) => {
           icon={locationIcon}
           eventHandlers={{
             click: (e) => {
-              handleMarkerClick(location)
+              handleMarkerClick(location);
             },
           }}
-        >
-        </Marker>
-      ))
-      }
-    </MapContainer >
-  )
-}
+        ></Marker>
+      ))}
+    </MapContainer>
+  );
+};
 
-export default BaseMap
+export default BaseMap;
