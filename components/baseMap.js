@@ -6,6 +6,7 @@ import { ImageOverlay, MapContainer, Marker } from "react-leaflet";
 import React, { useContext } from "react";
 
 import AppContext from "../components/context";
+
 const Leaflet = require("leaflet");
 
 const BaseMap = ({ mapLocations }) => {

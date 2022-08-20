@@ -7,10 +7,10 @@ import styles from "../styles/legend.module.css";
 
 export default function MapLegend({ location }) {
   const [height, setHeight] = useState(0);
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const clickHandler = (_e) => {
-    setOpen(!open);
+  const clickHandler = (e) => {
+    setIsOpen(!isOpen);
     setHeight(height === 0 ? "auto" : 0);
   };
 
@@ -21,8 +21,8 @@ export default function MapLegend({ location }) {
       color: "#faebd7",
     },
     to: {
-      transform: open ? "rotate(180deg)" : "rotate(0deg)",
-      color: open ? "#faebd7" : "#faebd7",
+      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+      color: isOpen ? "#faebd7" : "#faebd7",
     },
     config: { duration: "120" },
   });
