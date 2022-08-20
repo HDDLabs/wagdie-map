@@ -24,11 +24,8 @@
   color: whitesmoke;
 }
 
-.redBox {
+.map {
   display: flex;
   height: 100vh;
   width: 50vw;
-  /* width: 90vw;
-  height: 90vh;
-  margin-left: 5vw; */
 }

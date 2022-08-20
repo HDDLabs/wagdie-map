@@ -21,7 +21,7 @@ export default function Home() {
           WAGDIE Map
         </h1>
 
-        <div className={styles.redBox}>
+        <div className={styles.map}>
           <MapWithNoSSR/>
         </div>
       </main>
