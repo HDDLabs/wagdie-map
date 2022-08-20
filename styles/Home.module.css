@@ -13,16 +13,22 @@
   background: #353535;
 }
 
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  font-family: Wagdie_Fraktur_21;
-  color: whitesmoke;
-}
-
 .map {
   display: flex;
   height: 100vh;
   width: 100vw;
+}
+
+.legend {
+  background-color: #353535;
+  padding: 20px;
+}
+
+.legendHeader {
+  color: #faebd7;
+  font-family: Wagdie_Fraktur_21;
+}
+
+.legendText {
+  color: #faebd7;
 }
