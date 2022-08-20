@@ -1,5 +1,6 @@
 import AppContext from "../components/context";
 import Head from "next/head";
+import LayerPanel from "../components/layerPanel";
 import Map from "../components/map";
 import MapLegend from "../components/mapLegend";
 import { getWikiLocationsData } from "../lib/wiki";
