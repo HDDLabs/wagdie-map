@@ -50,7 +50,7 @@ const BaseMap = ({ mapLocations }) => {
       />
 
       <Marker
-        position={[540, 400]}
+        position={[572, 332]}
         icon={ourLocationIcon}
       ></Marker>
 
