@@ -21,11 +21,16 @@ const Map = () => {
     { name: "Grand Elevator", coordinates: [580, 320] },
   ];
 
+  const locationIcon = Leaflet.icon({
+    iconUrl: '../images/mapicons/icon_location.png',
+    iconSize: [40, 40]
+  });
+
   return (
     <MapContainer
       center={mapCenter}
       zoom={2}
-      maxZoom={6}
+      maxZoom={3}
       minZoom={0}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
@@ -40,6 +45,7 @@ const Map = () => {
         <Marker
           key={name}
           position={coordinates}
+          icon={locationIcon}
         >
           <Popup>
             {name}
