@@ -5,7 +5,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 const Leaflet = require('leaflet');
 
-const Map = () => {
+const BaseMap = () => {
   const mapCenter = [500, 500]
   const imageBounds = [[0, 0], [1000, 1000]]
 
@@ -39,7 +39,8 @@ const Map = () => {
       minZoom={1}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
-      crs={Leaflet.CRS.Simple} >
+      crs={Leaflet.CRS.Simple}
+    >
 
       <ImageOverlay
         url="../images/wagdiemap.jpeg"
@@ -47,7 +48,6 @@ const Map = () => {
       />
 
       <Marker position={[524, 450]} icon={ourLocationIcon}></Marker>
-
       {mapLocations.map(({ name, coordinates }) => (
         <Marker
           key={name}
@@ -64,4 +64,4 @@ const Map = () => {
   )
 }
 
-export default Map
+export default BaseMap
