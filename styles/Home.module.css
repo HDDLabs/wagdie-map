@@ -3,6 +3,11 @@
   src: url("../public/fonts/Wagdie_Fraktur_21.otf");
 }
 
+@font-face {
+  font-family: EskapadeFraktur-Black;
+  src: url('../public/fonts/EskapadeFraktur-Black.ttf');
+}
+
 .main {
   display: flex;
   flex-direction: column;

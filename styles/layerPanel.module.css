@@ -1,0 +1,38 @@
+.layerPanel {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    padding: 12px;
+    z-index: 1000;
+
+    background: #222;
+
+    width: auto;
+    height: auto;
+
+    color: #faebd7;
+}
+
+.layerPanel h3 {
+    font-family: EskapadeFraktur-Black;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 auto;
+}
+
+.layerButtons {
+    text-transform: uppercase;
+}
+
+.layerButtons div {
+    color: grey;
+    border-top: 1px solid #faebd7;
+    padding: 6px;
+    cursor: pointer;
+    user-select: none;
+    font-family: EskapadeFraktur-Black;
+}
+
+.layerButtons :last-child {
+    border-bottom: 1px solid #faebd7;
+}
