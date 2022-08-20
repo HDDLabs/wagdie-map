@@ -45,7 +45,7 @@ const BaseMap = ({ mapLocations }) => {
 
       <Marker
         key={"location"}
-        position={[567, 332]}
+        position={[537, 400]}
         icon={ourLocationIcon}
       ></Marker>
 
