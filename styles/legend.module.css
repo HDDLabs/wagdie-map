@@ -1,5 +1,5 @@
 .legendContainer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 24px;
   z-index: 1000;
