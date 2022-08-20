@@ -21,6 +21,11 @@ const Map = () => {
     { name: "Grand Elevator", coordinates: [580, 320] },
   ];
 
+  const ourLocationIcon = Leaflet.icon({
+    iconUrl: '../images/mapicons/icon_youarehere.png',
+    iconSize: [120, 106]
+  });
+
   const locationIcon = Leaflet.icon({
     iconUrl: '../images/mapicons/icon_location.png',
     iconSize: [40, 40]
@@ -40,6 +45,8 @@ const Map = () => {
         url="../images/wagdiemap.jpeg"
         bounds={imageBounds}
       />
+
+      <Marker position={[524, 450]} icon={ourLocationIcon}></Marker>
 
       {mapLocations.map(({ name, coordinates }) => (
         <Marker
