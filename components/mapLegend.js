@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useMapEvents, useState } from "react";
-import styles from '../styles/Home.module.css'
+import styles from '../styles/legend.module.css'
 import AnimateHeight from 'react-animate-height';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useSpring, animated } from "react-spring";
