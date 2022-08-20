@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>WAGDIE Map</title>
+        <title>Map of WAGDIE</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
