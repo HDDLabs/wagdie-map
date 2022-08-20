@@ -1,4 +1,5 @@
-import React, { Component, useEffect, useMapEvents, useState } from "react";
+import React, { useState } from "react";
+
 import styles from "../styles/layerPanel.module.css";
 
 export default function LayerPanel() {
