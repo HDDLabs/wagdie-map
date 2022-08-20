@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: EskapadeFraktur-Black;
-  src: url('../public/fonts/EskapadeFraktur-Black.ttf');
+  src: url("../public/fonts/EskapadeFraktur-Black.ttf");
 }
 
 .main {
