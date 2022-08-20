@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import dynamic from "next/dynamic";
+import { getWikiLocationsData, getPageContent } from '../lib/wiki';
 
-export default function Home() {
+export default function Home({ allLocationssData }) {
+  console.log(allLocationssData)
+
   const MapWithNoSSR = dynamic(() => import("../components/map"), {
     ssr: false
   });
@@ -22,4 +25,14 @@ export default function Home() {
       </main>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const allLocationssData = await getWikiLocationsData();
+  
+  return {
+    props: {
+      allLocationssData: allLocationssData
+    }
+  }
 }
