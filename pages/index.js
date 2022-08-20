@@ -13,7 +13,7 @@ export default function Home({ allLocationssData }) {
     <div className={styles.container}>
       <Head>
         <title>World of WAGDIE</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Map of the World of WAGDIE." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
