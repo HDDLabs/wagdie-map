@@ -60,16 +60,6 @@ const BaseMap = ({ mapLocations }) => {
             },
           }}
         >
-          <Popup
-            closeButton={false}
-          >
-            <a
-              rel="noreferrer"
-              target="_blank"
-              href={location.path}>
-              {location.title}
-            </a>
-          </Popup>
         </Marker>
       ))
       }
