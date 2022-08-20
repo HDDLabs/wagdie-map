@@ -27,6 +27,7 @@ export async function getStaticProps() {
   return {
     props: {
       allLocationssData: allLocationssData
-    }
+    },
+    revalidate: 1
   }
 }
