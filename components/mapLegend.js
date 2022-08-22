@@ -9,7 +9,7 @@ export default function MapLegend({ location }) {
   const [height, setHeight] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const clickHandler = (e) => {
+  const clickHandler = (_e) => {
     setIsOpen(!isOpen);
     setHeight(height === 0 ? "auto" : 0);
   };

@@ -1,38 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 
+import AppContext from "../components/context";
 import styles from "../styles/layerPanel.module.css";
 
 export default function LayerPanel() {
-  const [selectedLayer, setSelectedLayer] = useState({
-    title: "locations",
-    active: true,
-  });
-
-  const [layers, setLayers] = useState([
-    {
-      title: "locations",
-      active: true,
-    },
-    {
-      title: "burns",
-      active: false,
-    },
-    {
-      title: "deaths",
-      active: false,
-    },
-  ]);
+  const { layers, setLayers } = useContext(AppContext);
 
   const updateLayers = (selectedLayer) => {
     // loop over the layers to find the right one
     let updatedLayers = layers.map((layer) => {
       if (layer.title == selectedLayer.title) {
-        return { ...layer, active: !layer.active }; //gets everything that was already in layer, and updates "active"
+        return { ...layer, active: !layer.active }; //gets everything that was already in the layer, and updates "active"
       }
       return layer; // else return unmodified layer
     });
-
-    console.log(updatedLayers);
 
     setLayers(updatedLayers);
   };
@@ -49,7 +30,6 @@ export default function LayerPanel() {
                 color: layer.active ? "salmon" : "white",
               }}
               onClick={() => {
-                setSelectedLayer(layer);
                 updateLayers(layer);
               }}
             >
