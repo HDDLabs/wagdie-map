@@ -1,13 +1,14 @@
+import { getWikiBurnsData, getWikiLocationsData } from "../lib/wiki";
+
 import AppContext from "../components/context";
 import Head from "next/head";
 import LayerPanel from "../components/layerPanel";
 import Map from "../components/map";
 import MapLegend from "../components/mapLegend";
-import { getWikiLocationsData } from "../lib/wiki";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
 
-export default function Home({ allLocationssData }) {
+export default function Home({ mapData }) {
   const { selectedLocation } = useContext(AppContext);
 
   return (
@@ -22,7 +23,7 @@ export default function Home({ allLocationssData }) {
         <MapLegend location={selectedLocation}></MapLegend>
         <LayerPanel></LayerPanel>
         <div className={styles.map}>
-          <Map mapLocations={allLocationssData} />
+          <Map mapData={mapData} />
         </div>
       </main>
     </div>
@@ -30,11 +31,15 @@ export default function Home({ allLocationssData }) {
 }
 
 export async function getStaticProps() {
-  const allLocationssData = await getWikiLocationsData();
+  const allLocationsData = await getWikiLocationsData();
+  const allBurnsData = await getWikiBurnsData();
 
   return {
     props: {
-      allLocationssData: allLocationssData,
+      mapData: {
+        allLocationsData: allLocationsData,
+        allBurnsData: allBurnsData,
+      },
     },
     revalidate: 1,
   };

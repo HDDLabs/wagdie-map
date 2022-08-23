@@ -15,10 +15,11 @@ import AppContext from "../components/context";
 
 const Leaflet = require("leaflet");
 
-const BaseMap = ({ mapLocations }) => {
+const BaseMap = ({ mapData }) => {
   const { setSelectedLocation } = useContext(AppContext);
   const { layers } = useContext(AppContext);
   const locationsLayerGroup = useRef();
+  const burnsLayerGroup = useRef();
 
   const MapController = () => {
     const map = useMap();
@@ -29,6 +30,10 @@ const BaseMap = ({ mapLocations }) => {
           layer.active == true
             ? map.addLayer(locationsLayerGroup.current)
             : map.removeLayer(locationsLayerGroup.current);
+        } else if (layer.title == "burns") {
+          layer.active == true
+            ? map.addLayer(burnsLayerGroup.current)
+            : map.removeLayer(burnsLayerGroup.current);
         }
       });
     }, [map]);
@@ -58,6 +63,12 @@ const BaseMap = ({ mapLocations }) => {
     iconAnchor: [20, 20],
   });
 
+  const burnIcon = Leaflet.icon({
+    iconUrl: "../images/mapicons/icon_burn.png",
+    iconSize: [38, 74],
+    iconAnchor: [19, 74],
+  });
+
   return (
     <MapContainer
       center={mapCenter}
@@ -73,13 +84,13 @@ const BaseMap = ({ mapLocations }) => {
       <LayerGroup id="ourLocation">
         <Marker
           key={"location"}
-          position={mapLocations.ourLocation.htmlcoordinates}
+          position={mapData.allLocationsData.ourLocation.htmlcoordinates}
           icon={ourLocationIcon}
         ></Marker>
       </LayerGroup>
 
       <LayerGroup id="locations" ref={locationsLayerGroup}>
-        {mapLocations.locations.map((location) => (
+        {mapData.allLocationsData.locations.map((location) => (
           <Marker
             key={location.title}
             position={location.htmlcoordinates}
@@ -92,6 +103,22 @@ const BaseMap = ({ mapLocations }) => {
           ></Marker>
         ))}
       </LayerGroup>
+
+      <LayerGroup id="burns" ref={burnsLayerGroup}>
+        {mapData.allBurnsData.map((burn) => (
+          <Marker
+            key={burn.title}
+            position={burn.htmlcoordinates}
+            icon={burnIcon}
+            eventHandlers={{
+              click: (_e) => {
+                handleMarkerClick(burn);
+              },
+            }}
+          ></Marker>
+        ))}
+      </LayerGroup>
+
       <MapController />
     </MapContainer>
   );
