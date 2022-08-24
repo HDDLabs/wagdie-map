@@ -1,4 +1,8 @@
-import { getWikiBurnsData, getWikiLocationsData } from "../lib/wiki";
+import {
+  getWikiBattlesData,
+  getWikiBurnsData,
+  getWikiLocationsData,
+} from "../lib/wiki";
 
 import AppContext from "../components/context";
 import Head from "next/head";
@@ -33,12 +37,14 @@ export default function Home({ mapData }) {
 export async function getStaticProps() {
   const allLocationsData = await getWikiLocationsData();
   const allBurnsData = await getWikiBurnsData();
+  const allBattlesData = await getWikiBattlesData();
 
   return {
     props: {
       mapData: {
         allLocationsData: allLocationsData,
         allBurnsData: allBurnsData,
+        allBattlesData: allBattlesData,
       },
     },
     revalidate: 1,

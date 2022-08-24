@@ -20,6 +20,7 @@ const BaseMap = ({ mapData }) => {
   const { layers } = useContext(AppContext);
   const locationsLayerGroup = useRef();
   const burnsLayerGroup = useRef();
+  const battlesLayerGroup = useRef();
 
   const MapController = () => {
     const map = useMap();
@@ -34,6 +35,10 @@ const BaseMap = ({ mapData }) => {
           layer.active == true
             ? map.addLayer(burnsLayerGroup.current)
             : map.removeLayer(burnsLayerGroup.current);
+        } else if (layer.title == "battles") {
+          layer.active == true
+            ? map.addLayer(battlesLayerGroup.current)
+            : map.removeLayer(battlesLayerGroup.current);
         }
       });
     }, [map]);
@@ -65,6 +70,12 @@ const BaseMap = ({ mapData }) => {
 
   const burnIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_burn.png",
+    iconSize: [38, 74],
+    iconAnchor: [19, 74],
+  });
+
+  const battleIcon = Leaflet.icon({
+    iconUrl: "../images/mapicons/icon_fight.png",
     iconSize: [38, 74],
     iconAnchor: [19, 74],
   });
@@ -113,6 +124,21 @@ const BaseMap = ({ mapData }) => {
             eventHandlers={{
               click: (_e) => {
                 handleMarkerClick(burn);
+              },
+            }}
+          ></Marker>
+        ))}
+      </LayerGroup>
+
+      <LayerGroup id="battles" ref={battlesLayerGroup}>
+        {mapData.allBattlesData.map((battle) => (
+          <Marker
+            key={battle.title}
+            position={battle.htmlcoordinates}
+            icon={battleIcon}
+            eventHandlers={{
+              click: (_e) => {
+                handleMarkerClick(battle);
               },
             }}
           ></Marker>

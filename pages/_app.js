@@ -23,6 +23,10 @@ function MyApp({ Component, pageProps }) {
       title: "deaths",
       active: true,
     },
+    {
+      title: "battles",
+      active: true,
+    },
   ]);
 
   return (
