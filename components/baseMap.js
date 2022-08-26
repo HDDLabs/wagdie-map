@@ -21,6 +21,7 @@ const BaseMap = ({ mapData }) => {
   const locationsLayerGroup = useRef();
   const burnsLayerGroup = useRef();
   const battlesLayerGroup = useRef();
+  const deathsLayerGroup = useRef();
 
   const MapController = () => {
     const map = useMap();
@@ -39,6 +40,10 @@ const BaseMap = ({ mapData }) => {
           layer.active == true
             ? map.addLayer(battlesLayerGroup.current)
             : map.removeLayer(battlesLayerGroup.current);
+        } else if (layer.title == "deaths") {
+          layer.active == true
+            ? map.addLayer(deathsLayerGroup.current)
+            : map.removeLayer(deathsLayerGroup.current);
         }
       });
     }, [map]);
@@ -76,6 +81,12 @@ const BaseMap = ({ mapData }) => {
 
   const battleIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_fight.png",
+    iconSize: [38, 74],
+    iconAnchor: [19, 74],
+  });
+
+  const deathIcon = Leaflet.icon({
+    iconUrl: "../images/mapicons/icon_death.png",
     iconSize: [38, 74],
     iconAnchor: [19, 74],
   });
@@ -139,6 +150,21 @@ const BaseMap = ({ mapData }) => {
             eventHandlers={{
               click: (_e) => {
                 handleMarkerClick(battle);
+              },
+            }}
+          ></Marker>
+        ))}
+      </LayerGroup>
+
+      <LayerGroup id="deaths" ref={deathsLayerGroup}>
+        {mapData.allDeathsData.map((death) => (
+          <Marker
+            key={death.title}
+            position={death.htmlcoordinates}
+            icon={deathIcon}
+            eventHandlers={{
+              click: (_e) => {
+                handleMarkerClick(death);
               },
             }}
           ></Marker>

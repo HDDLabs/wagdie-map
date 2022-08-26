@@ -1,6 +1,7 @@
 import {
   getWikiBattlesData,
   getWikiBurnsData,
+  getWikiDeathsData,
   getWikiLocationsData,
 } from "../lib/wiki";
 
@@ -38,6 +39,7 @@ export async function getStaticProps() {
   const allLocationsData = await getWikiLocationsData();
   const allBurnsData = await getWikiBurnsData();
   const allBattlesData = await getWikiBattlesData();
+  const allDeathsData = await getWikiDeathsData();
 
   return {
     props: {
@@ -45,6 +47,7 @@ export async function getStaticProps() {
         allLocationsData: allLocationsData,
         allBurnsData: allBurnsData,
         allBattlesData: allBattlesData,
+        allDeathsData: allDeathsData,
       },
     },
     revalidate: 1,
