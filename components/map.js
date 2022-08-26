@@ -4,8 +4,8 @@ const DynamicMap = dynamic(() => import("./baseMap"), {
   ssr: false,
 });
 
-const Map = ({ mapLocations }) => {
-  return <DynamicMap mapLocations={mapLocations}></DynamicMap>;
+const Map = ({ mapData }) => {
+  return <DynamicMap mapData={mapData}></DynamicMap>;
 };
 
 export default Map;
