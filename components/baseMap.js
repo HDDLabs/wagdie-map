@@ -96,7 +96,7 @@ const BaseMap = ({ mapData }) => {
       center={mapCenter}
       zoom={2}
       maxZoom={3}
-      minZoom={1}
+      minZoom={0}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
       crs={Leaflet.CRS.Simple}
