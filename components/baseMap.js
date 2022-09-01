@@ -26,6 +26,11 @@ const BaseMap = ({ mapData }) => {
   const MapController = () => {
     const map = useMap();
 
+    map.setMaxBounds([
+      [0, 0],
+      [1000, 1000],
+    ]);
+
     useEffect(() => {
       layers.forEach((layer) => {
         if (layer.title == "locations") {
