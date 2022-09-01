@@ -26,11 +26,6 @@ const BaseMap = ({ mapData }) => {
   const MapController = () => {
     const map = useMap();
 
-    map.setMaxBounds([
-      [0, 0],
-      [1000, 1000],
-    ]);
-
     useEffect(() => {
       layers.forEach((layer) => {
         if (layer.title == "locations") {
@@ -102,6 +97,10 @@ const BaseMap = ({ mapData }) => {
       zoom={2}
       maxZoom={3}
       minZoom={-1.5}
+      maxBounds={[
+        [-100, -100],
+        [1100, 1100],
+      ]}
       scrollWheelZoom={true}
       style={{ height: "100%", width: "100%" }}
       crs={Leaflet.CRS.Simple}
