@@ -21,19 +21,26 @@ export default function LayerPanel() {
   return (
     <div className={styles.layerPanel}>
       <div className="layer-panel-content">
-        <h3>Layers</h3>
-        <div className={styles.layerButtons}>
+        <h3>Map Legend</h3>
+        <div className={styles.layerButtonsContainer}>
           {layers.map((layer) => (
             <div
+              className={styles.layerButton}
               key={layer.title}
-              style={{
-                color: layer.active ? "salmon" : "white",
-              }}
               onClick={() => {
                 updateLayers(layer);
               }}
             >
-              {layer.title}
+              <div>
+                <img src={layer.image}></img>
+              </div>
+              <div
+                style={{
+                  color: layer.active ? "salmon" : "#faebd7",
+                }}
+              >
+                {layer.title}
+              </div>
             </div>
           ))}
         </div>
