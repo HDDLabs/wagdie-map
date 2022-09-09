@@ -14,18 +14,22 @@ function MyApp({ Component, pageProps }) {
     {
       title: "locations",
       active: true,
+      image: "../images/legendicons/location_legend.png",
     },
     {
       title: "burns",
       active: true,
+      image: "../images/legendicons/burn_legend.png",
     },
     {
       title: "deaths",
       active: true,
+      image: "../images/legendicons/death_legend.png",
     },
     {
       title: "battles",
       active: true,
+      image: "../images/legendicons/battle_legend.png",
     },
   ]);
 

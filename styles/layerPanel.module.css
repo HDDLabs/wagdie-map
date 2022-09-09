@@ -1,38 +1,46 @@
 .layerPanel {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    padding: 12px;
-    z-index: 1000;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 12px;
+  z-index: 1000;
 
-    background: #222;
+  background: #222;
 
-    width: auto;
-    height: auto;
+  width: auto;
+  height: auto;
 
-    color: #faebd7;
+  color: #faebd7;
 }
 
 .layerPanel h3 {
-    font-family: EskapadeFraktur-Black;
-    text-align: center;
-    text-transform: uppercase;
-    margin: 0 auto;
+  font-family: EskapadeFraktur-Black;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0 auto;
+  padding-bottom: 8px;
 }
 
-.layerButtons {
-    text-transform: uppercase;
+.layerButtonsContainer {
+  text-transform: uppercase;
+  border-bottom: 1px solid #faebd7;
 }
 
-.layerButtons div {
-    color: grey;
-    border-top: 1px solid #faebd7;
-    padding: 6px;
-    cursor: pointer;
-    user-select: none;
-    font-family: EskapadeFraktur-Black;
+.layerButton {
+  border-top: 1px solid #faebd7;
 }
 
-.layerButtons :last-child {
-    border-bottom: 1px solid #faebd7;
+.layerButtonsContainer div {
+  height: 55px;
+  padding: 6px;
+
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  color: grey;
+  font-family: EskapadeFraktur-Black;
+
+  cursor: pointer;
+  user-select: none;
 }
