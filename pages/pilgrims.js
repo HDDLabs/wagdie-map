@@ -23,8 +23,13 @@ export default function Home({ locations }) {
               <div className={styles.flexGrid}>
                 {location.nfts.map((nft, k) => {
                   return (
-                    <div data-tip={nft.name} key={k} className={styles.portrait} onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}>
-                      <img src={nft.image} />
+                    <div
+                      data-tip={nft.name}
+                      key={k}
+                      className={styles.portrait}
+                      onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                    >
+                      <img src={nft.image} className={nft.hasName ? '' : styles.naked}/>
                     </div>
                   )
                 })}
