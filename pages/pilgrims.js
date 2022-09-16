@@ -4,10 +4,8 @@ import {
   getLocations
 } from "../lib/fate";
 
-import AppContext from "../components/context";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useContext } from "react";
 
 export default function Home({ locations }) {
   return (
