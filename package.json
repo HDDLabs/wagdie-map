@@ -10,18 +10,24 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.10.5",
     "dom-parser": "^0.1.6",
     "graphql": "^16.5.0",
     "leaflet": "^1.8.0",
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "leaflet-rastercoords": "^1.0.4",
+    "lodash": "^4.17.21",
     "next": "12.2.0",
+    "node-fetch": "^3.2.10",
     "react": "18.2.0",
     "react-animate-height": "^3.0.4",
     "react-dom": "18.2.0",
     "react-leaflet": "^4.0.1",
-    "react-spring": "^9.5.2"
+    "react-spring": "^9.5.2",
+    "react-tooltip": "^4.2.21"
   },
   "devDependencies": {
     "eslint": "8.18.0",

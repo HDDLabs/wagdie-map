@@ -19,6 +19,45 @@
   background: #353535;
 }
 
+.pilgrimMain {
+  font-family: EskapadeFraktur-Black;
+  color: #faebd7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #353535;
+}
+
+.pilgrimMain h1 {
+  margin: 20px;
+}
+
+.flexGrid {
+  padding: 20px;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  flex-wrap: wrap;
+  background: #353535;
+}
+
+.portrait {
+  display: flex;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #353535;
+}
+
+.portrait:hover {
+  cursor:pointer;
+  border: 2px solid #faebd7;
+}
+
 .map {
   position: absolute;
   display: flex;
