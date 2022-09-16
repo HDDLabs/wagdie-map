@@ -58,6 +58,10 @@
   border: 2px solid #faebd7;
 }
 
+.naked {
+  opacity: 0.4;
+}
+
 .map {
   position: absolute;
   display: flex;
