@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.5",
     "dom-parser": "^0.1.6",
+    "ethers": "^5.7.1",
     "graphql": "^16.5.0",
     "leaflet": "^1.8.0",
     "leaflet-defaulticon-compatibility": "^0.1.1",
@@ -27,7 +28,8 @@
     "react-dom": "18.2.0",
     "react-leaflet": "^4.0.1",
     "react-spring": "^9.5.2",
-    "react-tooltip": "^4.2.21"
+    "react-tooltip": "^4.2.21",
+    "wagmi": "^0.6.6"
   },
   "devDependencies": {
     "eslint": "8.18.0",
