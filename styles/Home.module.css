@@ -34,9 +34,17 @@
   margin: 20px;
 }
 
+.pilgrimLocation {
+  padding: 80px;
+  padding-bottom: 0px;
+}
+
+.pilgrimFooter {
+  height: 80px;
+}
+
 .flexGrid {
-  padding: 20px;
-  padding-bottom: 80px;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -54,12 +62,21 @@
 }
 
 .portrait:hover {
-  cursor:pointer;
+  cursor: pointer;
   border: 2px solid #faebd7;
 }
 
 .naked {
-  opacity: 0.4;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #353535;
+  opacity: 0.6;
+}
+
+.naked:hover {
+  cursor: pointer;
+  border: 2px solid #faebd7;
 }
 
 .map {
