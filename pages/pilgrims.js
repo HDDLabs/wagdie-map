@@ -5,13 +5,12 @@ import _ from "lodash";
 
 import {
   WagmiConfig,
-  createClient,
   configureChains,
+  createClient,
   defaultChains,
   useAccount,
   useConnect,
   useEnsName,
-  useEnsAvatar,
 } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { InjectedConnector } from 'wagmi/connectors/injected';
@@ -23,7 +22,7 @@ import {
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { provider, webSocketProvider } = configureChains(
   defaultChains,
   [publicProvider()],
 );
@@ -36,9 +35,6 @@ const client = createClient({
 
 const OwnerName = ({ address, count }) => {
   const { data: ensName } = useEnsName({ address });
-  // const { data, isError, isLoading } = useEnsAvatar({
-  //   addressOrName: address,
-  // });
 
   return (
     <h4 className={styles.h4}>
