@@ -8,7 +8,6 @@ import {
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { filter } from 'lodash';
 
 export default function Home({ locations }) {
   const [filterOwner, setFilterOwner] = useState(false);
@@ -60,11 +59,11 @@ export default function Home({ locations }) {
                 <>
                   {owned.map((owner, o) => {
                     return (
-                      <div className={styles.flexGridOwners}>
+                      <div key={o} className={styles.flexGridOwners}>
                         <h4 className={styles.h3}>
                           {owner.owner}
                         </h4>
-                        <div className={styles.flexGrid} key={o}>
+                        <div className={styles.flexGrid}>
                           {owner.nfts.map((nft, k) => {
                             return (
                               <div
