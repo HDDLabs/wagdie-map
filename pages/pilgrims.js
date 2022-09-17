@@ -1,4 +1,6 @@
 import ReactTooltip from 'react-tooltip';
+import { useState } from "react";
+import _ from "lodash";
 
 import {
   getLocations
@@ -6,8 +8,11 @@ import {
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { filter } from 'lodash';
 
 export default function Home({ locations }) {
+  const [filterOwner, setFilterOwner] = useState(false);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,38 +22,102 @@ export default function Home({ locations }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.pilgrimMain}>
+        <div className={styles.pilgrimHeader}>
+          <img className={styles.pilgrimLogo} src="/images/wagdie.png" />
+          <div
+            className={filterOwner ? styles.byOwnerOn : styles.byOwner}
+            onClick={() => setFilterOwner(!filterOwner)}>
+              By Owner
+          </div>
+        </div>
         {locations.map((location, i) => {
+          const owned = _.orderBy(location.owners.map((owner, o) => {
+            const nfts = [...location.known.filter(nft => nft.owner === owner), ...location.unknown.filter(nft => nft.owner === owner)];
+            return {
+              owner,
+              nfts,
+              total: nfts.length,
+            }
+          }), ['total'], ['desc']);
+
           return (
             <div key={i} className={styles.pilgrimLocation}>
-              <h1>{location.name} - {location.known.length + location.unknown.length} ({location.known.length})</h1>
-              <div className={styles.flexGrid}>
-                {location.known.map((nft, k) => {
-                  return (
-                    <div
-                      data-tip={nft.name}
-                      key={k}
-                      className={styles.portrait}
-                      onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                    >
-                      <img src={nft.image} />
-                    </div>
-                  )
-                })}
+              <div className={styles.locationTitles}>
+                <h1>
+                  {location.name}
+                </h1>
+                <h3 className={styles.h3}>
+                  Staked ({location.known.length + location.unknown.length})
+                </h3>
+                <h3 className={styles.h3}>
+                  Characters ({location.known.length})
+                </h3>
+                <h3 className={styles.h3}>
+                  Owners ({location.owners.length})
+                </h3>
               </div>
-              <div className={styles.flexGrid}>
-                {location.unknown.map((nft, k) => {
-                  return (
-                    <div
-                      data-tip={nft.name}
-                      key={k}
-                      className={styles.naked}
-                      onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                    >
-                      <img src={nft.image} />
-                    </div>
-                  )
-                })}
-              </div>
+              {filterOwner ? (
+                <>
+                  {owned.map((owner, o) => {
+                    return (
+                      <div className={styles.flexGridOwners}>
+                        <h4 className={styles.h3}>
+                          {owner.owner}
+                        </h4>
+                        <div className={styles.flexGrid} key={o}>
+                          {owner.nfts.map((nft, k) => {
+                            return (
+                              <div
+                                data-tip={nft.name}
+                                key={k}
+                                className={styles.naked}
+                                style={{
+                                  opacity: 1,
+                                }}
+                                onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                              >
+                                <img src={nft.image} />
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </>
+              ) : (
+                <>
+                  <div className={styles.flexGrid}>
+                    {location.known.map((nft, k) => {
+                      return (
+                        <div
+                          data-tip={nft.name}
+                          key={k}
+                          className={styles.portrait}
+                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                        >
+                          <img src={nft.image} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <div className={styles.flexGrid}>
+                    {location.unknown.map((nft, k) => {
+                      return (
+                        <div
+                          data-tip={nft.name}
+                          key={k}
+                          className={styles.naked}
+                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                        >
+                          <img src={nft.image} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </>
+              )}
+
             </div>
           )
         })}
