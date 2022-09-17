@@ -11,8 +11,9 @@ export default function Home({ locations }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>World of WAGDIE</title>
-        <meta name="description" content="Map of the World of WAGDIE." />
+        <title>Pilgrims of WAGDIE</title>
+        <meta name="description" content="Pilgrims of the World of WAGDIE." />
+        <meta property="og:image" content="/images/pilgrims.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.pilgrimMain}>
