@@ -20,9 +20,9 @@ export default function Home({ locations }) {
         {locations.map((location, i) => {
           return (
             <div key={i} className={styles.pilgrimLocation}>
-              <h1>{location.name} - {location.nfts.length}</h1>
+              <h1>{location.name} - {location.known.length + location.unknown.length} ({location.known.length})</h1>
               <div className={styles.flexGrid}>
-                {location.nfts.map((nft, k) => {
+                {location.known.map((nft, k) => {
                   return (
                     <div
                       data-tip={nft.name}
@@ -30,15 +30,29 @@ export default function Home({ locations }) {
                       className={styles.portrait}
                       onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
                     >
-                      <img src={nft.image} className={nft.hasName ? '' : styles.naked}/>
+                      <img src={nft.image} />
                     </div>
                   )
                 })}
               </div>
-
+              <div className={styles.flexGrid}>
+                {location.unknown.map((nft, k) => {
+                  return (
+                    <div
+                      data-tip={nft.name}
+                      key={k}
+                      className={styles.naked}
+                      onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                    >
+                      <img src={nft.image} />
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           )
         })}
+        <div className={styles.pilgrimFooter}/>
       </main>
       <ReactTooltip
         backgroundColor='white'
