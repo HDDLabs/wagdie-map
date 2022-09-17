@@ -71,7 +71,7 @@ export default function Home({ locations }) {
                                 key={k}
                                 className={styles.naked}
                                 style={{
-                                  opacity: 1,
+                                  opacity: nft.hasName ? 1 : 0.6,
                                 }}
                                 onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
                               >
@@ -83,6 +83,10 @@ export default function Home({ locations }) {
                       </div>
                     )
                   })}
+                  <ReactTooltip
+                    backgroundColor='white'
+                    textColor='black'
+                  />
                 </>
               ) : (
                 <>
@@ -114,18 +118,17 @@ export default function Home({ locations }) {
                       )
                     })}
                   </div>
+                  <ReactTooltip
+                    backgroundColor='white'
+                    textColor='black'
+                  />
                 </>
               )}
-
             </div>
           )
         })}
         <div className={styles.pilgrimFooter}/>
       </main>
-      <ReactTooltip
-        backgroundColor='white'
-        textColor='black'
-      />
     </div>
   );
 }
