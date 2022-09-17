@@ -153,3 +153,9 @@
   align-items: flex-start;
 }
 
+.h4 {
+  padding-right: 20px;
+  opacity: 1;
+  color: #000;
+}
+
