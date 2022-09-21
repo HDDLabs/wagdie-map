@@ -36,7 +36,7 @@ const OwnerName = ({ address, count, burned }) => {
   const { data: ensName } = useEnsName({ address });
 
   return (
-    <h3 className={styles.h3}>
+    <h3 className={styles.h3} style={{ padding: '10px'}}>
       {ensName || address} ({count} - {burned})
     </h3>
   );
@@ -53,7 +53,9 @@ const Main = ({ locations }) => {
   return (
     <main className={styles.pilgrimMain}>
       <div className={styles.pilgrimHeader}>
-        <img className={styles.pilgrimLogo} src="/images/wagdie.png" />
+        <a href="/">
+          <img className={styles.pilgrimLogo} src="/images/wagdie.png" />
+        </a>
         <div
           className={filter === 1 ? styles.byOwnerOn : styles.byOwner}
           onClick={() => filter === 1 ? setFilter(0) : setFilter(1)}>
@@ -85,24 +87,37 @@ const Main = ({ locations }) => {
         return (
           <div key={i} className={styles.pilgrimLocation}>
             <div className={styles.locationTitles}>
-              <h1>
-                {location.name}
-              </h1>
-              <h3 className={styles.h3}>
-                Staked ({location.known.length + location.unknown.length + location.burned.length})
-              </h3>
+              <div>
+                <h1>
+                  {location.name}
+                </h1>
+              </div>
+              <div>
+                <h3 className={styles.h3}>
+                  Staked ({location.known.length + location.unknown.length + location.burned.length})
+                </h3>
+              </div>
+              <div>
               <h3 className={styles.h3}>
                 Characters ({location.known.length})
               </h3>
+              </div>
+              <div>
               <h3 className={styles.h3}>
                 Unknowns ({location.unknown.length})
               </h3>
+              </div>
+              <div>
               <h3 className={styles.h3}>
                 Burned ({location.burned.length})
               </h3>
+              </div>
+              <div>
               <h3 className={styles.h3}>
                 Owners ({location.owners.length})
               </h3>
+              </div>
+
             </div>
             {filter === 1 ? (
               <>

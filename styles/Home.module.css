@@ -35,9 +35,7 @@
 }
 
 .pilgrimLocation {
-  padding: 80px;
-  padding-bottom: 0px;
-  padding-top: 20px;
+  padding: 20px;
 }
 
 .pilgrimFooter {
@@ -190,12 +188,14 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding-right: 20px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
 }
 
 .h3 {
   padding-right: 20px;
   opacity: 0.6;
+  margin: 0px;
 }
 
 .flexGridOwners {
@@ -206,7 +206,6 @@
 }
 
 .h4 {
-  padding-right: 20px;
   opacity: 1;
   color: #000;
 }
