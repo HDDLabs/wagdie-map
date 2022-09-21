@@ -80,6 +80,58 @@
   border: 2px solid #faebd7;
 }
 
+.burned {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #353535;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.burnedSmall {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #353535;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.fire {
+  position: relative;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  width: 80px;
+  height: 80px;
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+}
+
+.fireSmall {
+  position: relative;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  width: 40px;
+  height: 40px;
+}
+
+.imageSmall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+}
+
 .map {
   position: absolute;
   display: flex;
