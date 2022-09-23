@@ -210,3 +210,13 @@
   color: #000;
 }
 
+.search {
+  margin-left: 20px;
+}
+
+.search > input {
+  padding: 8px;
+  color: #353535;
+  font-family: EskapadeFraktur-Black;
+}
+

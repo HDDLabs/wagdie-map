@@ -1,6 +1,7 @@
 import ReactTooltip from 'react-tooltip';
 import { useState } from "react";
 import _ from "lodash";
+import Fuse from 'fuse.js';
 
 import {
   WagmiConfig,
@@ -44,11 +45,26 @@ const OwnerName = ({ address, count, burned }) => {
 
 const Main = ({ locations }) => {
   const [filter, setFilter] = useState(0);
+  const [search, setSearch] = useState('');
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
+
+  let allNFTs = [];
+
+  for (const location of locations) {
+    allNFTs = [...allNFTs, ...location.known, ...location.unknown, ...location.burned];
+  }
+
+  const fuse = new Fuse(allNFTs, {
+    threshold: 0.1,
+    includeScore: true,
+    keys: ['name']
+  });
+
+  const result = (fuse.search(search)).map((s) => s.item.id);
 
   return (
     <main className={styles.pilgrimMain}>
@@ -61,6 +77,16 @@ const Main = ({ locations }) => {
           onClick={() => filter === 1 ? setFilter(0) : setFilter(1)}>
             By Owner
         </div>
+        <div className={styles.search}>
+          <input
+            type="text"
+            search="search"
+            placeholder="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+
         {isConnected && false && (
           <div
             className={filter === 2 ? styles.byOwnerOn : styles.byOwner}
@@ -72,9 +98,9 @@ const Main = ({ locations }) => {
       {locations.map((location, i) => {
         const owned = _.orderBy(location.owners.map((owner, o) => {
           const nfts = [
-            ...location.known.filter(nft => nft.owner === owner),
-            ...location.unknown.filter(nft => nft.owner === owner),
-            ...location.burned.filter(nft => nft.owner === owner)
+            ...location.known.filter(nft => nft.owner === owner && ((search && _.includes(result, nft.id) || !search))),
+            ...location.unknown.filter(nft => nft.owner === owner && ((search && _.includes(result, nft.id) || !search))),
+            ...location.burned.filter(nft => nft.owner === owner && ((search && _.includes(result, nft.id) || !search)))
           ];
           return {
             owner,
@@ -98,69 +124,76 @@ const Main = ({ locations }) => {
                 </h3>
               </div>
               <div>
-              <h3 className={styles.h3}>
-                Characters ({location.known.length})
-              </h3>
+                <h3 className={styles.h3}>
+                  Alive ({location.known.length + location.unknown.length})
+                </h3>
               </div>
               <div>
-              <h3 className={styles.h3}>
-                Unknowns ({location.unknown.length})
-              </h3>
+                <h3 className={styles.h3}>
+                  Burned ({location.burned.length})
+                </h3>
               </div>
               <div>
-              <h3 className={styles.h3}>
-                Burned ({location.burned.length})
-              </h3>
+                <h3 className={styles.h3}>
+                  Characters ({location.known.length})
+                </h3>
               </div>
               <div>
-              <h3 className={styles.h3}>
-                Owners ({location.owners.length})
-              </h3>
+                <h3 className={styles.h3}>
+                  Unknowns ({location.unknown.length})
+                </h3>
+              </div>
+              <div>
+                <h3 className={styles.h3}>
+                  Owners ({location.owners.length})
+                </h3>
               </div>
 
             </div>
             {filter === 1 ? (
               <>
                 {owned.map((owner, o) => {
-                  return (
-                    <div key={o} className={styles.flexGridOwners}>
-                      <OwnerName address={owner.owner} count={owner.total} burned={owner.burned} />
-                      <div className={styles.flexGrid}>
-                        {owner.nfts.map((nft, k) => {
-                          if (nft.isBurned) {
+                  if (owner.nfts.length) {
+                    return (
+                      <div key={o} className={styles.flexGridOwners}>
+                        <OwnerName address={owner.owner} count={owner.total} burned={owner.burned} />
+                        <div className={styles.flexGrid}>
+                          {owner.nfts.map((nft, k) => {
+                            if (nft.isBurned) {
+                              return (
+                                <div
+                                  data-tip={nft.name}
+                                  key={k}
+                                  className={styles.burnedSmall}
+                                  style={{
+                                    opacity: nft.hasName ? 1 : 0.6,
+                                  }}
+                                  onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                                >
+                                  <img className={styles.imageSmall} src={nft.image} />
+                                  <img className={styles.fireSmall} src={'/images/fire.gif'} />
+                                </div>
+                              )
+                            }
+  
                             return (
                               <div
                                 data-tip={nft.name}
                                 key={k}
-                                className={styles.burnedSmall}
+                                className={styles.naked}
                                 style={{
                                   opacity: nft.hasName ? 1 : 0.6,
                                 }}
                                 onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
                               >
-                                <img className={styles.imageSmall} src={nft.image} />
-                                <img className={styles.fireSmall} src={'/images/fire.gif'} />
+                                <img src={nft.image} />
                               </div>
                             )
-                          }
-
-                          return (
-                            <div
-                              data-tip={nft.name}
-                              key={k}
-                              className={styles.naked}
-                              style={{
-                                opacity: nft.hasName ? 1 : 0.6,
-                              }}
-                              onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                            >
-                              <img src={nft.image} />
-                            </div>
-                          )
-                        })}
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )
+                    )
+                  }
                 })}
                 <ReactTooltip
                   backgroundColor='white'
@@ -171,45 +204,51 @@ const Main = ({ locations }) => {
               <>
                 <div className={styles.flexGrid}>
                   {location.known.map((nft, k) => {
-                    return (
-                      <div
-                        data-tip={nft.name}
-                        key={k}
-                        className={styles.portrait}
-                        onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                      >
-                        <img src={nft.image} />
-                      </div>
-                    )
+                    if ((search && _.includes(result, nft.id)) || !search) {
+                      return (
+                        <div
+                          data-tip={nft.name}
+                          key={k}
+                          className={styles.portrait}
+                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                        >
+                          <img src={nft.image} />
+                        </div>
+                      )
+                    }
                   })}
                 </div>
                 <div className={styles.flexGrid}>
                   {location.unknown.map((nft, k) => {
-                    return (
-                      <div
-                        data-tip={nft.name}
-                        key={k}
-                        className={styles.naked}
-                        onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                      >
-                        <img src={nft.image} />
-                      </div>
-                    )
+                    if ((search && _.includes(result, nft.id)) || !search) {
+                      return (
+                        <div
+                          data-tip={nft.name}
+                          key={k}
+                          className={styles.naked}
+                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                        >
+                          <img src={nft.image} />
+                        </div>
+                      ) 
+                    }
                   })}
                 </div>
                 <div className={styles.flexGrid}>
                   {location.burned.map((nft, k) => {
-                    return (
-                      <div
-                        data-tip={nft.name}
-                        key={k}
-                        className={styles.burned}
-                        onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                      >
-                        <img className={styles.image} src={nft.image} />
-                        <img className={styles.fire} src={'/images/fire.gif'} />
-                      </div>
-                    )
+                    if ((search && _.includes(result, nft.id)) || !search) {
+                      return (
+                        <div
+                          data-tip={nft.name}
+                          key={k}
+                          className={styles.burned}
+                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                        >
+                          <img className={styles.image} src={nft.image} />
+                          <img className={styles.fire} src={'/images/fire.gif'} />
+                        </div>
+                      ) 
+                    }
                   })}
                 </div>
                 <ReactTooltip
