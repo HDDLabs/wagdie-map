@@ -80,7 +80,7 @@ const Main = ({ locations }) => {
         <div className={styles.search}>
           <input
             type="text"
-            search="search"
+            name="search"
             placeholder="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
