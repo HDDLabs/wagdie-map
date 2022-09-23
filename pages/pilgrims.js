@@ -52,18 +52,6 @@ const Main = ({ locations }) => {
     connector: new InjectedConnector(),
   });
 
-  // if (typeof window !== 'undefined') {
-
-  // }
-
-  // useEffect(() => {
-  //   ReactTooltip.rebuild();
-  // });
-
-  // useEffect(() => {
-  //   ReactTooltip.rebuild();
-  // }, [search]);
-
   let allNFTs = [];
 
   for (const location of locations) {
