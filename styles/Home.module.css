@@ -87,6 +87,11 @@
   left: 0;
 }
 
+.burned:hover {
+  cursor: pointer;
+  border: 2px solid #faebd7;
+}
+
 .burnedSmall {
   width: 40px;
   height: 40px;
@@ -96,6 +101,11 @@
   left: 0;
 }
 
+.fireSmall:hover {
+  cursor: pointer;
+  border: 2px solid #faebd7;
+}
+
 .fire {
   position: relative;
   top: 0;
@@ -103,6 +113,12 @@
   opacity: 0.5;
   width: 80px;
   height: 80px;
+  border: 2px solid #353535;
+}
+
+.fire:hover {
+  cursor: pointer;
+  border: 2px solid #faebd7;
 }
 
 .image {
@@ -111,6 +127,7 @@
   left: 0;
   width: 80px;
   height: 80px;
+  border: 2px solid #353535;
 }
 
 .fireSmall {
@@ -120,6 +137,7 @@
   opacity: 0.5;
   width: 40px;
   height: 40px;
+  border: 2px solid #353535;
 }
 
 .imageSmall {
@@ -128,6 +146,7 @@
   left: 0;
   width: 40px;
   height: 40px;
+  border: 2px solid #353535;
 }
 
 .map {
@@ -208,5 +227,15 @@
 .h4 {
   opacity: 1;
   color: #000;
+}
+
+.search {
+  margin-left: 20px;
+}
+
+.search > input {
+  padding: 8px;
+  color: #353535;
+  font-family: EskapadeFraktur-Black;
 }
 
