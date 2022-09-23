@@ -1,7 +1,7 @@
-import ReactTooltip from 'react-tooltip';
 import { useState } from "react";
 import _ from "lodash";
 import Fuse from 'fuse.js';
+import Tooltip from '@mui/material/Tooltip';
 
 import {
   WagmiConfig,
@@ -52,6 +52,18 @@ const Main = ({ locations }) => {
     connector: new InjectedConnector(),
   });
 
+  // if (typeof window !== 'undefined') {
+
+  // }
+
+  // useEffect(() => {
+  //   ReactTooltip.rebuild();
+  // });
+
+  // useEffect(() => {
+  //   ReactTooltip.rebuild();
+  // }, [search]);
+
   let allNFTs = [];
 
   for (const location of locations) {
@@ -83,7 +95,9 @@ const Main = ({ locations }) => {
             name="search"
             placeholder="search"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+            }}
           />
         </div>
 
@@ -161,33 +175,33 @@ const Main = ({ locations }) => {
                           {owner.nfts.map((nft, k) => {
                             if (nft.isBurned) {
                               return (
+                                <Tooltip key={k} title={nft.name} placement="top" arrow>
+                                  <div
+                                    className={styles.burnedSmall}
+                                    style={{
+                                      opacity: nft.hasName ? 1 : 0.6,
+                                    }}
+                                    onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                                  >
+                                    <img className={styles.imageSmall} src={nft.image} />
+                                    <img className={styles.fireSmall} src={'/images/fire.gif'} />
+                                  </div>
+                                </Tooltip>
+                              )
+                            }
+  
+                            return (
+                              <Tooltip key={k} title={nft.name} placement="top" arrow>
                                 <div
-                                  data-tip={nft.name}
-                                  key={k}
-                                  className={styles.burnedSmall}
+                                  className={styles.naked}
                                   style={{
                                     opacity: nft.hasName ? 1 : 0.6,
                                   }}
                                   onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
                                 >
-                                  <img className={styles.imageSmall} src={nft.image} />
-                                  <img className={styles.fireSmall} src={'/images/fire.gif'} />
+                                  <img src={nft.image} />
                                 </div>
-                              )
-                            }
-  
-                            return (
-                              <div
-                                data-tip={nft.name}
-                                key={k}
-                                className={styles.naked}
-                                style={{
-                                  opacity: nft.hasName ? 1 : 0.6,
-                                }}
-                                onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                              >
-                                <img src={nft.image} />
-                              </div>
+                              </Tooltip>
                             )
                           })}
                         </div>
@@ -195,10 +209,6 @@ const Main = ({ locations }) => {
                     )
                   }
                 })}
-                <ReactTooltip
-                  backgroundColor='white'
-                  textColor='black'
-                />
               </>
             ) : (
               <>
@@ -206,14 +216,14 @@ const Main = ({ locations }) => {
                   {location.known.map((nft, k) => {
                     if ((search && _.includes(result, nft.id)) || !search) {
                       return (
-                        <div
-                          data-tip={nft.name}
-                          key={k}
-                          className={styles.portrait}
-                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                        >
-                          <img src={nft.image} />
-                        </div>
+                        <Tooltip key={k} title={nft.name} placement="top" arrow>
+                          <div
+                            className={styles.portrait}
+                            onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                          >
+                            <img src={nft.image} />
+                          </div>
+                        </Tooltip>
                       )
                     }
                   })}
@@ -222,14 +232,14 @@ const Main = ({ locations }) => {
                   {location.unknown.map((nft, k) => {
                     if ((search && _.includes(result, nft.id)) || !search) {
                       return (
-                        <div
-                          data-tip={nft.name}
-                          key={k}
-                          className={styles.naked}
-                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                        >
-                          <img src={nft.image} />
-                        </div>
+                        <Tooltip key={k} title={nft.name} placement="top" arrow>
+                          <div
+                            className={styles.naked}
+                            onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                          >
+                            <img src={nft.image} />
+                          </div>
+                        </Tooltip>
                       ) 
                     }
                   })}
@@ -238,23 +248,19 @@ const Main = ({ locations }) => {
                   {location.burned.map((nft, k) => {
                     if ((search && _.includes(result, nft.id)) || !search) {
                       return (
-                        <div
-                          data-tip={nft.name}
-                          key={k}
-                          className={styles.burned}
-                          onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
-                        >
-                          <img className={styles.image} src={nft.image} />
-                          <img className={styles.fire} src={'/images/fire.gif'} />
-                        </div>
+                        <Tooltip key={k} title={nft.name} placement="top" arrow>
+                          <div
+                            className={styles.burned}
+                            onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
+                          >
+                            <img className={styles.image} src={nft.image} />
+                            <img className={styles.fire} src={'/images/fire.gif'} />
+                          </div>
+                        </Tooltip>
                       ) 
                     }
                   })}
                 </div>
-                <ReactTooltip
-                  backgroundColor='white'
-                  textColor='black'
-                />
               </>
             )}
           </div>
