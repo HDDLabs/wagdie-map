@@ -38,3 +38,19 @@ a.leaflet-control-zoom-out {
   background: #000 !important;
   z-index: 999 !important;
 }
+
+.slick-prev,
+.slick-next {
+  top: auto !important;
+  bottom: 25px !important;
+  right: 35px !important;
+  z-index: 10 !important;
+}
+
+.slick-prev {
+  left: 30px !important;
+}
+
+.slick-next {
+  right: 30px !important;
+}

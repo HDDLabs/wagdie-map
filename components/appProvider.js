@@ -3,6 +3,11 @@ import React from "react";
 import { useState } from "react";
 
 export const AppProvider = ({ children }) => {
+  const [selectedChapter, setSelectedChapter] = useState({
+    title: "The Church of Her",
+    coordinates: [520, 467],
+  });
+
   const [selectedLocation, setSelectedLocation] = useState({
     title: "We Are All Going To Die",
     details: "",
@@ -47,6 +52,8 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        selectedChapter,
+        setSelectedChapter,
         selectedLocation,
         setSelectedLocation,
         layers,

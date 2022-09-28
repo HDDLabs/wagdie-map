@@ -10,6 +10,7 @@ import Head from "next/head";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
 import MapLegend from "../components/mapLegend";
+import TimelineSlider from "../components/timelineSlider";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
 
@@ -27,6 +28,7 @@ export default function Home({ mapData }) {
       <main className={styles.main}>
         <MapLegend location={selectedLocation}></MapLegend>
         <LayerPanel></LayerPanel>
+        <TimelineSlider></TimelineSlider>
         <div className={styles.map}>
           <Map mapData={mapData} />
         </div>

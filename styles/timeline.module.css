@@ -1,0 +1,19 @@
+.timelineContainer {
+  font-family: EskapadeFraktur-Black;
+
+  position: absolute;
+  bottom: 0px;
+  right: 24px;
+  z-index: 1000;
+
+  background: #222;
+
+  width: 800px;
+  height: 80px;
+
+  color: #faebd7;
+}
+
+.slide {
+  text-align: center;
+}

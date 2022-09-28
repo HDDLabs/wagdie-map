@@ -13,7 +13,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.10.5",
+    "@mui/material": "^5.10.6",
     "dom-parser": "^0.1.6",
     "ethers": "^5.7.1",
     "graphql": "^16.5.0",
@@ -27,8 +27,10 @@
     "react-animate-height": "^3.0.4",
     "react-dom": "18.2.0",
     "react-leaflet": "^4.0.1",
+    "react-slick": "^0.29.0",
     "react-spring": "^9.5.2",
     "react-tooltip": "^4.2.21",
+    "slick-carousel": "^1.8.1",
     "wagmi": "^0.6.6"
   },
   "devDependencies": {
