@@ -27,6 +27,8 @@ export default function MapLegend({ location }) {
 
   return (
     <div className={styles.legendContainer}>
+      <img className={styles.borderLeft} src={"../images/border-l.png"} />
+      <img className={styles.borderRight} src={"../images/border-r.png"} />
       <div onClick={clickHandler} className={styles.legendTitle}>
         <h1>{location.title}</h1>
         <animated.div style={iconAnimation}>
