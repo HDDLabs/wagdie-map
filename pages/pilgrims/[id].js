@@ -45,7 +45,7 @@ const OwnerName = ({ address, count, burned }) => {
   );
 };
 
-const Main = ({ locations }) => {
+const Main = ({ locations, id }) => {
   const [filter, setFilter] = useState(0);
   const [search, setSearch] = useState('');
   const { address, isConnected } = useAccount();
@@ -59,6 +59,9 @@ const Main = ({ locations }) => {
   for (const location of locations) {
     allNFTs = [...allNFTs, ...location.known, ...location.unknown, ...location.burned];
   }
+
+  const total = allNFTs.filter((n) => !n.isBurned);
+  const burned = allNFTs.filter((n) => n.isBurned);
 
   const fuse = new Fuse(allNFTs, {
     threshold: 0.1,
@@ -90,6 +93,7 @@ const Main = ({ locations }) => {
             }}
           />
         </div>
+        <OwnerName address={id} count={total.length} burned={burned.length} />
         {/* {isConnected && (
           <div
             className={filter === 2 ? styles.byOwnerOn : styles.byOwner}
@@ -208,7 +212,7 @@ export default function Owner({ locations }) {
           <meta property="og:image" content="/images/pilgrims.png" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Main locations={locations} />
+        <Main locations={locations} id={id}/>
       </div>
     </WagmiConfig>
   );
