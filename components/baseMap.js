@@ -63,32 +63,32 @@ const BaseMap = ({ mapData }) => {
 
   const ourLocationIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_youarehere.png",
-    iconSize: [120, 106],
-    iconAnchor: [60, 96],
+    iconSize: [120, 98],
+    iconAnchor: [60, 88],
   });
 
   const locationIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_location.png",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
+    iconSize: [30, 42],
+    iconAnchor: [15, 21],
   });
 
   const burnIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_burn.png",
-    iconSize: [38, 74],
-    iconAnchor: [19, 74],
+    iconSize: [38, 62],
+    iconAnchor: [19, 62],
   });
 
   const battleIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_fight.png",
-    iconSize: [38, 74],
-    iconAnchor: [19, 74],
+    iconSize: [38, 62],
+    iconAnchor: [19, 62],
   });
 
   const deathIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_death.png",
-    iconSize: [38, 74],
-    iconAnchor: [19, 74],
+    iconSize: [38, 62],
+    iconAnchor: [19, 62],
   });
 
   return (
