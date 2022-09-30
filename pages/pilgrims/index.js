@@ -17,10 +17,10 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 
 import {
   getLocations
-} from "../lib/fate";
+} from "../../lib/fate";
 
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 const { provider, webSocketProvider } = configureChains(
   defaultChains,
@@ -88,12 +88,11 @@ const Main = ({ locations }) => {
             }}
           />
         </div>
-
-        {isConnected && false && (
+        {isConnected && (
           <div
             className={filter === 2 ? styles.byOwnerOn : styles.byOwner}
             onClick={() => filter === 2 ? setFilter(0) : setFilter(2)}>
-              Mine
+              {ensName || address}
           </div>
         )}
       </div>
@@ -163,7 +162,7 @@ const Main = ({ locations }) => {
                           {owner.nfts.map((nft, k) => {
                             if (nft.isBurned) {
                               return (
-                                <Tooltip key={k} title={nft.name} placement="top" arrow>
+                                <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                                   <div
                                     className={styles.burnedSmall}
                                     style={{
@@ -179,7 +178,7 @@ const Main = ({ locations }) => {
                             }
   
                             return (
-                              <Tooltip key={k} title={nft.name} placement="top" arrow>
+                              <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                                 <div
                                   className={styles.naked}
                                   style={{
@@ -204,7 +203,7 @@ const Main = ({ locations }) => {
                   {location.known.map((nft, k) => {
                     if ((search && _.includes(result, nft.id)) || !search) {
                       return (
-                        <Tooltip key={k} title={nft.name} placement="top" arrow>
+                        <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                           <div
                             className={styles.portrait}
                             onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
@@ -220,7 +219,7 @@ const Main = ({ locations }) => {
                   {location.unknown.map((nft, k) => {
                     if ((search && _.includes(result, nft.id)) || !search) {
                       return (
-                        <Tooltip key={k} title={nft.name} placement="top" arrow>
+                        <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                           <div
                             className={styles.naked}
                             onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
@@ -236,7 +235,7 @@ const Main = ({ locations }) => {
                   {location.burned.map((nft, k) => {
                     if ((search && _.includes(result, nft.id)) || !search) {
                       return (
-                        <Tooltip key={k} title={nft.name} placement="top" arrow>
+                        <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                           <div
                             className={styles.burned}
                             onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
