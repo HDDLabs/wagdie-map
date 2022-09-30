@@ -17,10 +17,10 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 
 import {
   getLocations
-} from "../../lib/fate";
+} from "../lib/fate";
 
 import Head from "next/head";
-import styles from "../../styles/Home.module.css";
+import styles from "../styles/Home.module.css";
 
 const { provider, webSocketProvider } = configureChains(
   defaultChains,
