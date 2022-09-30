@@ -12,6 +12,13 @@ export const LayerPanel = () => {
   return width < breakpoint ? <MobileLayerPanel /> : <DesktopLayerPanel />;
 };
 
+function updateImage(imageString, active) {
+  const updatedImageString = !active
+    ? imageString.replace("_on", "_off")
+    : imageString.replace("_off", "_on");
+  return updatedImageString;
+}
+
 function MobileLayerPanel() {
   const { layers, setLayers } = useContext(AppContext);
   const [legendIsToggled, setLegendIsToggled] = useState(false);
@@ -20,7 +27,8 @@ function MobileLayerPanel() {
     // loop over the layers to find the right one
     let updatedLayers = layers.map((layer) => {
       if (layer.title == selectedLayer.title) {
-        return { ...layer, active: !layer.active }; //gets everything that was already in the layer, and updates "active"
+        const updatedImage = updateImage(layer.image, !layer.active);
+        return { ...layer, image: updatedImage, active: !layer.active }; //gets everything that was already in the layer, and updates the rest
       }
       return layer; // else return unmodified layer
     });
@@ -52,7 +60,12 @@ function MobileLayerPanel() {
       >
         Legend
       </div>
-      <div className="layer-panel-content">
+      <div className={styles.layerPanelContent}>
+        <img
+          className={styles.mobileBorderLeft}
+          src={"../images/border-l.png"}
+        />
+        <img className={styles.borderRight} src={"../images/border-r.png"} />
         <h3>Map Legend</h3>
         <div className={styles.layerButtonsContainer}>
           {layers.map((layer) => (
@@ -88,7 +101,8 @@ function DesktopLayerPanel() {
     // loop over the layers to find the right one
     let updatedLayers = layers.map((layer) => {
       if (layer.title == selectedLayer.title) {
-        return { ...layer, active: !layer.active }; //gets everything that was already in the layer, and updates "active"
+        const updatedImage = updateImage(layer.image, !layer.active);
+        return { ...layer, image: updatedImage, active: !layer.active }; //gets everything that was already in the layer, and updates the rest
       }
       return layer; // else return unmodified layer
     });
@@ -98,7 +112,9 @@ function DesktopLayerPanel() {
 
   return (
     <div className={styles.layerPanel}>
-      <div className="layer-panel-content">
+      <div className={styles.layerPanelContent}>
+        <img className={styles.borderLeft} src={"../images/border-l.png"} />
+        <img className={styles.borderRight} src={"../images/border-r.png"} />
         <h3>Map Legend</h3>
         <div className={styles.layerButtonsContainer}>
           {layers.map((layer) => (
