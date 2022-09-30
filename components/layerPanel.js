@@ -66,6 +66,14 @@ function MobileLayerPanel() {
           src={"../images/border-l.png"}
         />
         <img className={styles.borderRight} src={"../images/border-r.png"} />
+        <img
+          className={styles.mobileBorderBottomLeft}
+          src={"../images/border-bottom-l.png"}
+        />
+        <img
+          className={styles.borderBottomRight}
+          src={"../images/border-bottom-r.png"}
+        />
         <h3>Map Legend</h3>
         <div className={styles.layerButtonsContainer}>
           {layers.map((layer) => (
@@ -115,6 +123,14 @@ function DesktopLayerPanel() {
       <div className={styles.layerPanelContent}>
         <img className={styles.borderLeft} src={"../images/border-l.png"} />
         <img className={styles.borderRight} src={"../images/border-r.png"} />
+        <img
+          className={styles.borderBottomLeft}
+          src={"../images/border-bottom-l.png"}
+        />
+        <img
+          className={styles.borderBottomRight}
+          src={"../images/border-bottom-r.png"}
+        />
         <h3>Map Legend</h3>
         <div className={styles.layerButtonsContainer}>
           {layers.map((layer) => (

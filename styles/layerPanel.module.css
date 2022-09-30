@@ -95,6 +95,18 @@
   right: 2px;
 }
 
+.borderBottomLeft {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+}
+
+.borderBottomRight {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
+
 /* Mobile CSS */
 
 .mobileLayerToggle {
@@ -113,5 +125,11 @@
 .mobileBorderLeft {
   position: absolute;
   top: 2px;
-  left: 41px;
+  left: 42px;
+}
+
+.mobileBorderBottomLeft {
+  position: absolute;
+  bottom: 2px;
+  left: 42px;
 }
