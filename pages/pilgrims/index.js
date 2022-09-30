@@ -2,6 +2,7 @@ import { useState } from "react";
 import _ from "lodash";
 import Fuse from 'fuse.js';
 import Tooltip from '@mui/material/Tooltip';
+import Link from 'next/link'
 
 import {
   WagmiConfig,
@@ -17,10 +18,10 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 
 import {
   getLocations
-} from "../lib/fate";
+} from "../../lib/fate";
 
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 const { provider, webSocketProvider } = configureChains(
   defaultChains,
@@ -37,9 +38,11 @@ const OwnerName = ({ address, count, burned }) => {
   const { data: ensName } = useEnsName({ address });
 
   return (
-    <h3 className={styles.h3} style={{ padding: '10px'}}>
-      {ensName || address} ({count} - {burned})
-    </h3>
+    <Link href={`/pilgrims/${address}`}>
+      <h3 className={styles.owner} style={{ padding: '10px'}}>
+        {ensName || address} ({count} - {burned})
+      </h3>
+    </Link>
   );
 };
 
@@ -61,7 +64,7 @@ const Main = ({ locations }) => {
   const fuse = new Fuse(allNFTs, {
     threshold: 0.1,
     includeScore: true,
-    keys: ['name']
+    keys: ['name', 'owner']
   });
 
   const result = (fuse.search(search)).map((s) => s.item.id);
@@ -88,13 +91,13 @@ const Main = ({ locations }) => {
             }}
           />
         </div>
-        {isConnected && (
+        {/* {isConnected && (
           <div
             className={filter === 2 ? styles.byOwnerOn : styles.byOwner}
             onClick={() => filter === 2 ? setFilter(0) : setFilter(2)}>
               {ensName || address}
           </div>
-        )}
+        )} */}
       </div>
       {locations.map((location, i) => {
         const owned = _.orderBy(location.owners.map((owner, o) => {
@@ -221,7 +224,10 @@ const Main = ({ locations }) => {
                       return (
                         <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                           <div
-                            className={styles.naked}
+                            className={styles.portrait}
+                            style={{
+                              opacity: 0.6,
+                            }}
                             onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
                           >
                             <img src={nft.image} />
@@ -237,11 +243,11 @@ const Main = ({ locations }) => {
                       return (
                         <Tooltip key={k} title={nft.shortName} placement="top" arrow>
                           <div
-                            className={styles.burned}
+                            className={styles.burnedSmall}
                             onClick={()=> window.open(`https://fateofwagdie.com/characters/${nft.id}`, "_blank")}
                           >
-                            <img className={styles.image} src={nft.image} />
-                            <img className={styles.fire} src={'/images/fire.gif'} />
+                            <img className={styles.imageSmall} src={nft.image} />
+                            <img className={styles.fireSmall} src={'/images/fire.gif'} />
                           </div>
                         </Tooltip>
                       ) 
