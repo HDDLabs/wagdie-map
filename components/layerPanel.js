@@ -89,7 +89,8 @@ function MobileLayerPanel() {
               </div>
               <div
                 style={{
-                  color: layer.active ? "salmon" : "#faebd7",
+                  color: "salmon",
+                  opacity: layer.active ? 1.0 : 0.6,
                 }}
               >
                 {layer.title}
@@ -146,7 +147,8 @@ function DesktopLayerPanel() {
               </div>
               <div
                 style={{
-                  color: layer.active ? "salmon" : "#faebd7",
+                  color: "salmon",
+                  opacity: layer.active ? 1.0 : 0.6,
                 }}
               >
                 {layer.title}
