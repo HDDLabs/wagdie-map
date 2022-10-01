@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
 import AnimateHeight from "react-animate-height";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styles from "../styles/legend.module.css";
 
 export default function MapLegend({ location }) {
@@ -18,21 +17,21 @@ export default function MapLegend({ location }) {
   const iconAnimation = useSpring({
     from: {
       transform: "rotate(0deg)",
-      color: "#faebd7",
     },
     to: {
       transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-      color: isOpen ? "#faebd7" : "#faebd7",
     },
     config: { duration: "120" },
   });
 
   return (
     <div className={styles.legendContainer}>
+      <img className={styles.borderLeft} src={"../images/border-l.png"} />
+      <img className={styles.borderRight} src={"../images/border-r.png"} />
       <div onClick={clickHandler} className={styles.legendTitle}>
         <h1>{location.title}</h1>
         <animated.div style={iconAnimation}>
-          <ExpandMoreIcon />
+          <img src="../images/icon_arrow_down.png"></img>
         </animated.div>
       </div>
       <AnimateHeight duration={500} height={height}>

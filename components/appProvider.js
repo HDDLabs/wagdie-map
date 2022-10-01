@@ -12,22 +12,22 @@ export const AppProvider = ({ children }) => {
     {
       title: "locations",
       active: true,
-      image: "../images/legendicons/location_legend.png",
+      image: "../images/legendicons/legend_icon_location_on.png",
     },
     {
       title: "burns",
       active: true,
-      image: "../images/legendicons/burn_legend.png",
+      image: "../images/legendicons/legend_icon_burn_on.png",
     },
     {
       title: "deaths",
       active: true,
-      image: "../images/legendicons/death_legend.png",
+      image: "../images/legendicons/legend_icon_death_on.png",
     },
     {
       title: "battles",
       active: true,
-      image: "../images/legendicons/battle_legend.png",
+      image: "../images/legendicons/legend_icon_fight_on.png",
     },
   ]);
 

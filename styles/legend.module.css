@@ -20,7 +20,7 @@
 
   justify-content: space-between;
   align-items: center;
-  padding: 0px 8%;
+  padding: 0px 8% 0px 3%;
 
   cursor: pointer;
   user-select: none;
@@ -56,6 +56,18 @@
   line-height: 1.25em;
   font-weight: 300;
   transition: height 2s ease-out;
+}
+
+.borderLeft {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.borderRight {
+  position: absolute;
+  top: 2px;
+  right: 2px;
 }
 
 @media (max-width: 600px) {
