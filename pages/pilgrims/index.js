@@ -38,7 +38,7 @@ const OwnerName = ({ address, count, burned }) => {
   const { data: ensName } = useEnsName({ address });
 
   return (
-    <Link href={`/pilgrims/${address}`}>
+    <Link href={`/pilgrims/${address.toLowerCase()}`}>
       <h3 className={styles.owner} style={{ padding: '10px'}}>
         {ensName || address} ({count} - {burned})
       </h3>
