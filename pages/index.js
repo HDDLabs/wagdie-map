@@ -2,7 +2,6 @@ import {
   getWikiBattlesData,
   getWikiBurnsData,
   getWikiDeathsData,
-  getWikiLocationsData,
 } from "../lib/wiki";
 
 import AppContext from "../components/context";
@@ -10,6 +9,7 @@ import Head from "next/head";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
 import MapLegend from "../components/mapLegend";
+import { getLocations } from "../lib/locationMiddleware";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
 
@@ -36,7 +36,7 @@ export default function Home({ mapData }) {
 }
 
 export async function getStaticProps() {
-  const allLocationsData = await getWikiLocationsData();
+  const allLocationsData = await getLocations();
   const allBurnsData = await getWikiBurnsData();
   const allBattlesData = await getWikiBattlesData();
   const allDeathsData = await getWikiDeathsData();

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export const AppProvider = ({ children }) => {
   const [selectedLocation, setSelectedLocation] = useState({
-    title: "We Are All Going To Die",
+    name: "We Are All Going To Die",
     details: "",
   });
 

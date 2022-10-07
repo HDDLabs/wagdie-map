@@ -29,7 +29,7 @@ export default function MapLegend({ location }) {
       <img className={styles.borderLeft} src={"../images/border-l.png"} />
       <img className={styles.borderRight} src={"../images/border-r.png"} />
       <div onClick={clickHandler} className={styles.legendTitle}>
-        <h1>{location.title}</h1>
+        <h1>{location.name}</h1>
         <animated.div style={iconAnimation}>
           <img src="../images/icon_arrow_down.png"></img>
         </animated.div>
