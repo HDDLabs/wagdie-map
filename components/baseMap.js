@@ -70,7 +70,7 @@ const BaseMap = ({ mapData }) => {
   const locationIcon = Leaflet.icon({
     iconUrl: "../images/mapicons/icon_location.png",
     iconSize: [30, 42],
-    iconAnchor: [15, 21],
+    iconAnchor: [15, 42],
   });
 
   const burnIcon = Leaflet.icon({
