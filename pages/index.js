@@ -2,7 +2,6 @@ import {
   getWikiBattlesData,
   getWikiBurnsData,
   getWikiDeathsData,
-  getWikiLocationsData,
 } from "../lib/wiki";
 
 import AppContext from "../components/context";
@@ -10,7 +9,6 @@ import Head from "next/head";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
 import MapLegend from "../components/mapLegend";
-import _ from "lodash";
 import { getLocations } from "../lib/locationMiddleware";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
