@@ -7,21 +7,50 @@ import {
   LayerGroup,
   MapContainer,
   Marker,
+  Popup,
   useMap,
+  useMapEvents,
 } from "react-leaflet";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import AppContext from "../components/context";
+import { isDev } from "../components/context";
 
 const Leaflet = require("leaflet");
 
 const BaseMap = ({ mapData }) => {
+  const [position, setPosition] = useState(null);
   const { setSelectedLocation } = useContext(AppContext);
   const { layers } = useContext(AppContext);
   const locationsLayerGroup = useRef();
   const burnsLayerGroup = useRef();
   const battlesLayerGroup = useRef();
   const deathsLayerGroup = useRef();
+
+  const CoordinateDetector = () => {
+    const markerRef = useRef();
+
+    useEffect(() => {
+      const marker = markerRef.current;
+      if (marker) {
+        marker.openPopup();
+      }
+    }, []);
+
+    useMapEvents({
+      click(e) {
+        setPosition(e.latlng);
+      },
+    });
+
+    return position === null ? null : (
+      <Marker ref={markerRef} position={position} icon={locationIcon}>
+        <Popup offset={[0, -30]}>
+          {"" + position.lat + ", " + position.lng}
+        </Popup>
+      </Marker>
+    );
+  };
 
   const MapController = () => {
     const map = useMap();
@@ -176,6 +205,7 @@ const BaseMap = ({ mapData }) => {
       </LayerGroup>
 
       <MapController />
+      {isDev ? <CoordinateDetector></CoordinateDetector> : null}
     </MapContainer>
   );
 };
