@@ -1,3 +1,4 @@
+import { AppBar, Tab, Tabs, styled } from "@mui/material";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
@@ -7,10 +8,16 @@ import styles from "../styles/legend.module.css";
 export default function MapLegend({ location }) {
   const [height, setHeight] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const clickHandler = (_e) => {
     setIsOpen(!isOpen);
     setHeight(height === 0 ? "auto" : 0);
+  };
+
+  const tabClickHandler = (_e, selectedTab) => {
+    console.log(selectedTab);
+    setSelectedTab(selectedTab);
   };
 
   //rotate animation
@@ -24,6 +31,14 @@ export default function MapLegend({ location }) {
     config: { duration: "120" },
   });
 
+  // const StyledTab = styled(Tab)(({ theme }) => ({
+  //   color: "salmon",
+  //   fontFamily: ["EskapadeFraktur-Black"].join(","),
+  //   "&.Mui-selected": {
+  //     color: "salmon",
+  //   },
+  // }));
+
   return (
     <div className={styles.legendContainer}>
       <img className={styles.borderLeft} src={"../images/border-l.png"} />
@@ -35,11 +50,42 @@ export default function MapLegend({ location }) {
         </animated.div>
       </div>
       <AnimateHeight duration={500} height={height}>
-        <div
-          className={styles.legendContent}
-          dangerouslySetInnerHTML={{ __html: location.details }}
-        ></div>
+        <AppBar position="static" sx={{ backgroundColor: "#222" }}>
+          <Tabs
+            TabIndicatorProps={{
+              sx: { backgroundColor: "salmon" },
+            }}
+            variant="fullWidth"
+            value={selectedTab}
+            onChange={tabClickHandler}
+          >
+            <Tab label="Description" />
+            <Tab label="Staked" />
+            <Tab label="Yours" />
+          </Tabs>
+        </AppBar>
+        <TabPanel selectedTab={selectedTab} index={0}>
+          <div
+            className={styles.legendContent}
+            dangerouslySetInnerHTML={{ __html: location.details }}
+          ></div>
+        </TabPanel>
+        <TabPanel selectedTab={selectedTab} index={1}>
+          <div className={styles.legendContent}>
+            <h1>Coming Soon</h1>
+          </div>
+        </TabPanel>
+        <TabPanel selectedTab={selectedTab} index={2}>
+          <div className={styles.legendContent}>
+            <h1>Coming Soon</h1>
+          </div>{" "}
+        </TabPanel>
       </AnimateHeight>
     </div>
   );
+}
+
+function TabPanel(props) {
+  const { children, selectedTab, index } = props;
+  return <div>{selectedTab === index && <div>{children}</div>}</div>;
 }
