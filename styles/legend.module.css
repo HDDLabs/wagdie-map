@@ -58,6 +58,10 @@
   transition: height 2s ease-out;
 }
 
+.legendContent h1 {
+  font-family: EskapadeFraktur-Black;
+}
+
 .borderLeft {
   position: absolute;
   top: 2px;
@@ -68,6 +72,57 @@
   position: absolute;
   top: 2px;
   right: 2px;
+}
+
+.flexGrid {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  flex-wrap: wrap;
+  background: #333;
+}
+
+.alive {
+  display: flex;
+  width: 84px;
+  height: 84px;
+  border: 2px solid #333;
+}
+
+.alive:hover {
+  cursor: pointer;
+  border: 2px solid #faebd7;
+}
+
+.burnedImageContainer {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 84px;
+  height: 84px;
+  border: 2px solid #333;
+}
+
+.burnedImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 84px;
+  height: 84px;
+  border: 2px solid #333;
+}
+
+.fireImage {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 84px;
+  height: 84px;
+  border: 2px solid #333;
+  opacity: 0.5;
 }
 
 @media (max-width: 600px) {

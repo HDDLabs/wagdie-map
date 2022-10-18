@@ -40,5 +40,5 @@ a.leaflet-control-zoom-out {
 
 .MuiTab-root {
   color: salmon !important;
-  font-family: EskapadeFraktur-Black;
+  font-family: EskapadeFraktur-Black !important;
 }

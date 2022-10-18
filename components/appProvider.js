@@ -5,7 +5,8 @@ import { useState } from "react";
 export const AppProvider = ({ children }) => {
   const [selectedLocation, setSelectedLocation] = useState({
     name: "We Are All Going To Die",
-    details: "",
+    details: "<h1>Welcome to the Forsaken Lands</h1>",
+    characters: undefined,
   });
 
   const [layers, setLayers] = useState([
