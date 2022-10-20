@@ -37,3 +37,8 @@ a.leaflet-control-zoom-out {
   background: #000 !important;
   z-index: 999 !important;
 }
+
+.MuiTab-root {
+  color: salmon !important;
+  font-family: EskapadeFraktur-Black !important;
+}

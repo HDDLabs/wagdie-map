@@ -25,7 +25,7 @@ export default function Home({ mapData }) {
       </Head>
 
       <main className={styles.main}>
-        <MapLegend location={selectedLocation}></MapLegend>
+        <MapLegend infoPanelContent={selectedLocation}></MapLegend>
         <LayerPanel></LayerPanel>
         <div className={styles.map}>
           <Map mapData={mapData} />
