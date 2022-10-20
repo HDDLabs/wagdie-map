@@ -6,7 +6,7 @@ import AnimateHeight from "react-animate-height";
 import Tooltip from "@mui/material/Tooltip";
 import styles from "../styles/legend.module.css";
 
-export default function MapLegend({ location }) {
+export default function MapLegend({ infoPanelContent }) {
   const [height, setHeight] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -36,20 +36,20 @@ export default function MapLegend({ location }) {
       <img className={styles.borderLeft} src={"../images/border-l.png"} />
       <img className={styles.borderRight} src={"../images/border-r.png"} />
       <div onClick={clickHandler} className={styles.legendTitle}>
-        <h1>{location.name}</h1>
+        <h1>{infoPanelContent.name}</h1>
         <animated.div style={iconAnimation}>
           <img src="../images/icon_arrow_down.png"></img>
         </animated.div>
       </div>
       <AnimateHeight duration={500} height={height}>
-        {location.characters ? (
+        {infoPanelContent.characters ? (
           <TabbedContent
-            location={location}
+            infoPanelContent={infoPanelContent}
             selectedTab={selectedTab}
             tabClickHandler={tabClickHandler}
           ></TabbedContent>
         ) : (
-          <Description location={location}></Description>
+          <Description infoPanelContent={infoPanelContent}></Description>
         )}
       </AnimateHeight>
     </div>
@@ -57,7 +57,7 @@ export default function MapLegend({ location }) {
 }
 
 function TabbedContent(props) {
-  const { location, selectedTab, tabClickHandler } = props;
+  const { infoPanelContent, selectedTab, tabClickHandler } = props;
 
   return (
     <div>
@@ -76,10 +76,10 @@ function TabbedContent(props) {
         </Tabs>
       </AppBar>
       <TabPanel selectedTab={selectedTab} index={0}>
-        <Description location={location}></Description>
+        <Description infoPanelContent={infoPanelContent}></Description>
       </TabPanel>
       <TabPanel selectedTab={selectedTab} index={1}>
-        <Characters location={location}></Characters>
+        <Characters infoPanelContent={infoPanelContent}></Characters>
       </TabPanel>
       <TabPanel selectedTab={selectedTab} index={2}>
         <YourCharacters></YourCharacters>
@@ -94,12 +94,12 @@ function TabPanel(props) {
 }
 
 function Description(props) {
-  const { location } = props;
+  const { infoPanelContent } = props;
 
-  return location.details ? (
+  return infoPanelContent.details ? (
     <div
       className={styles.legendContent}
-      dangerouslySetInnerHTML={{ __html: location.details }}
+      dangerouslySetInnerHTML={{ __html: infoPanelContent.details }}
     ></div>
   ) : (
     <div className={styles.legendContent}>
@@ -109,16 +109,16 @@ function Description(props) {
 }
 
 function Characters(props) {
-  const { location } = props;
+  const { infoPanelContent } = props;
 
-  return location.characters ? (
+  return infoPanelContent.characters ? (
     <div className={styles.legendContent}>
       <div>
         <h1>Alive</h1>
       </div>
       <div className={styles.flexGrid}>
-        {location.characters.alive.length > 0 ? (
-          location.characters.alive.map((nft, k) => {
+        {infoPanelContent.characters.alive.length > 0 ? (
+          infoPanelContent.characters.alive.map((nft, k) => {
             return <AliveCharacter key={k} nft={nft}></AliveCharacter>;
           })
         ) : (
@@ -131,8 +131,8 @@ function Characters(props) {
         <h1>Burned</h1>
       </div>
       <div className={styles.flexGrid}>
-        {location.characters.dead.length > 0 ? (
-          location.characters.dead.map((nft, k) => {
+        {infoPanelContent.characters.dead.length > 0 ? (
+          infoPanelContent.characters.dead.map((nft, k) => {
             return <BurnedCharacter key={k} nft={nft}></BurnedCharacter>;
           })
         ) : (
