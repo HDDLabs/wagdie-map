@@ -6,9 +6,9 @@ import {
 
 import AppContext from "../components/context";
 import Head from "next/head";
+import InfoPanel from "../components/infoPanel";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
-import MapLegend from "../components/mapLegend";
 import { getLocations } from "../lib/locationMiddleware";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
@@ -25,7 +25,7 @@ export default function Home({ mapData }) {
       </Head>
 
       <main className={styles.main}>
-        <MapLegend infoPanelContent={selectedLocation}></MapLegend>
+        <InfoPanel infoPanelContent={selectedLocation}></InfoPanel>
         <LayerPanel></LayerPanel>
         <div className={styles.map}>
           <Map mapData={mapData} />

@@ -6,7 +6,7 @@ import AnimateHeight from "react-animate-height";
 import Tooltip from "@mui/material/Tooltip";
 import styles from "../styles/legend.module.css";
 
-export default function MapLegend({ infoPanelContent }) {
+export default function InfoPanel({ infoPanelContent }) {
   const [height, setHeight] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
