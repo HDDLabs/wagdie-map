@@ -1,0 +1,18 @@
+.walletButtonContainer {
+  position: absolute;
+  top: 24px;
+  right: 39px;
+
+  z-index: 1000;
+
+  width: auto;
+  height: auto;
+
+  color: #faebd7;
+  opacity: 0.8;
+}
+
+.walletButtonContainer:hover {
+  cursor: pointer;
+  opacity: 1;
+}

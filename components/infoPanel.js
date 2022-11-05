@@ -1,10 +1,23 @@
-import { AppBar, Tab, Tabs } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Grid,
+  Modal,
+  Paper,
+  Tab,
+  Tabs,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
 import AnimateHeight from "react-animate-height";
-import Tooltip from "@mui/material/Tooltip";
+import Fuse from "fuse.js";
+import _ from "lodash";
+import { getAccount } from "../lib/userTokensMiddleware";
 import styles from "../styles/legend.module.css";
+import { useAccount } from "wagmi";
 
 export default function InfoPanel({ infoPanelContent }) {
   const [height, setHeight] = useState(0);
@@ -82,7 +95,7 @@ function TabbedContent(props) {
         <Characters infoPanelContent={infoPanelContent}></Characters>
       </TabPanel>
       <TabPanel selectedTab={selectedTab} index={2}>
-        <YourCharacters></YourCharacters>
+        <YourCharacters infoPanelContent={infoPanelContent}></YourCharacters>
       </TabPanel>
     </div>
   );
@@ -180,10 +193,220 @@ function BurnedCharacter(props) {
   );
 }
 
-function YourCharacters() {
+function WalletCharacter(props) {
+  const { nft, key, locationID } = props;
+
+  const wagdieIsStaked = nft.location?.id == locationID;
+
   return (
+    <Tooltip key={key} title={nft.shortName} placement="top" arrow>
+      <div
+        className={styles.alive}
+        // onClick={() => window.open(nft.characterSheetURL, "_blank")}
+      >
+        <img src={nft.image} />
+        {wagdieIsStaked ? (
+          <div className={styles.walletCharacterStakedOverlay}>STAKED HERE</div>
+        ) : (
+          <></>
+        )}
+      </div>
+    </Tooltip>
+  );
+}
+
+function YourCharactersModal({ locationID, accountData, handleClose }) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: 500,
+    width: 500,
+    bgcolor: "#353535",
+    color: "#faebd7",
+    boxShadow: 24,
+    fontFamily: "EskapadeFraktur-Black",
+    p: 4,
+    overflow: "scroll",
+  };
+
+  const fuse = new Fuse(accountData?.alive, {
+    threshold: 0.1,
+    includeScore: true,
+    keys: ["name", "id"],
+  });
+
+  const result = fuse.search(searchQuery).map((s) => s.item.id);
+
+  const typographyStyle = {
+    fontFamily: "EskapadeFraktur-Black",
+  };
+
+  const aliveWagdies = accountData?.alive;
+
+  return (
+    <div>
+      <Modal open={!!accountData} onClose={handleClose}>
+        <Box sx={modalStyle}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid item xs="auto">
+              <Typography
+                sx={typographyStyle}
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                Select a character
+              </Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <div className={styles.search}>
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="search"
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value);
+                  }}
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid container direction="row" alignItems="center">
+            {aliveWagdies?.length > 0 ? (
+              aliveWagdies.map((nft, k) => {
+                if (
+                  (searchQuery && _.includes(result, nft.id)) ||
+                  !searchQuery
+                ) {
+                  return (
+                    <Grid item xs="auto">
+                      <WalletCharacter
+                        key={k}
+                        nft={nft}
+                        locationID={locationID}
+                      ></WalletCharacter>
+                    </Grid>
+                  );
+                }
+              })
+            ) : (
+              <div>
+                <p>You have no characters to stake at this location</p>
+              </div>
+            )}
+          </Grid>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+function YourCharacters(props) {
+  const { infoPanelContent } = props;
+  const { address, isConnected } = useAccount();
+  const [accountData, setAccountData] = React.useState(null);
+  const handleOpen = async () => {
+    const accountData = await getAccount(address);
+    console.log({ accountData });
+    console.log({ infoPanelContent });
+
+    setAccountData(accountData);
+  };
+  const handleClose = () => setAccountData(null);
+
+  const locationID = infoPanelContent.locationID;
+
+  const myAliveWagdies = _.filter(
+    infoPanelContent.characters?.alive,
+    (character) => {
+      return character.owner.toLowerCase() === address?.toLowerCase();
+    }
+  );
+
+  const myDeadWagdies = _.filter(
+    infoPanelContent.characters?.dead,
+    (character) => {
+      return character.owner.toLowerCase() === address?.toLowerCase();
+    }
+  );
+
+  return infoPanelContent.characters ? (
     <div className={styles.legendContent}>
-      <h1>Coming Soon</h1>
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Grid item xs="auto">
+          <h1>Alive</h1>
+        </Grid>
+        <Grid item xs="auto">
+          {isConnected ? (
+            <div>
+              {!infoPanelContent.areNftsLocked ? (
+                <div className={styles.stakeButton} onClick={handleOpen}>
+                  STAKE CHARACTER
+                </div>
+              ) : (
+                <div className={styles.stakeButtonLocked}>
+                  LOCATION IS LOCKED
+                </div>
+              )}
+              {accountData ? (
+                <YourCharactersModal
+                  locationID={locationID}
+                  accountData={accountData}
+                  handleClose={handleClose}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
+        </Grid>
+      </Grid>
+      <div className={styles.flexGrid}>
+        {myAliveWagdies.length > 0 ? (
+          myAliveWagdies.map((nft, k) => {
+            return <AliveCharacter key={k} nft={nft}></AliveCharacter>;
+          })
+        ) : (
+          <div>
+            <p>You have no characters at this Location</p>
+          </div>
+        )}
+      </div>
+      <div>
+        <h1>Burned</h1>
+      </div>
+      <div className={styles.flexGrid}>
+        {myDeadWagdies.length > 0 ? (
+          myDeadWagdies.map((nft, k) => {
+            return <BurnedCharacter key={k} nft={nft}></BurnedCharacter>;
+          })
+        ) : (
+          <div>
+            <p>You have no characters burned at this Location</p>
+          </div>
+        )}
+      </div>
+    </div>
+  ) : (
+    <div className={styles.legendContent}>
+      <h1>No Characters at this Location</h1>
     </div>
   );
 }

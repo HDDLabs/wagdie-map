@@ -1,4 +1,10 @@
 import {
+  WagmiConfig,
+  configureChains,
+  createClient,
+  defaultChains,
+} from "wagmi";
+import {
   getWikiBattlesData,
   getWikiBurnsData,
   getWikiDeathsData,
@@ -9,29 +15,44 @@ import Head from "next/head";
 import InfoPanel from "../components/infoPanel";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
+import { WalletButton } from "../components/walletButton";
 import { getLocations } from "../lib/locationMiddleware";
+import { publicProvider } from "wagmi/providers/public";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
+
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+]);
+
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+});
 
 export default function Home({ mapData }) {
   const { selectedLocation } = useContext(AppContext);
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>World of WAGDIE</title>
-        <meta name="description" content="Map of the World of WAGDIE." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <WagmiConfig client={client}>
+      <div className={styles.container}>
+        <Head>
+          <title>World of WAGDIE</title>
+          <meta name="description" content="Map of the World of WAGDIE." />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main className={styles.main}>
-        <InfoPanel infoPanelContent={selectedLocation}></InfoPanel>
-        <LayerPanel></LayerPanel>
-        <div className={styles.map}>
-          <Map mapData={mapData} />
-        </div>
-      </main>
-    </div>
+        <main className={styles.main}>
+          <InfoPanel infoPanelContent={selectedLocation}></InfoPanel>
+          <WalletButton></WalletButton>
+          <LayerPanel></LayerPanel>
+          <div className={styles.map}>
+            <Map mapData={mapData} />
+          </div>
+        </main>
+      </div>
+    </WagmiConfig>
   );
 }
 
