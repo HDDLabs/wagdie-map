@@ -414,7 +414,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
                         !searchQuery
                       ) {
                         return (
-                          <Grid item xs="auto">
+                          <Grid item xs="auto" key={k}>
                             <WalletCharacter
                               key={k}
                               nft={nft}
@@ -473,7 +473,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
                         !searchQuery
                       ) {
                         return (
-                          <Grid item xs="auto">
+                          <Grid item xs="auto" key={k}>
                             <WalletCharacter
                               key={k}
                               nft={nft}
@@ -532,7 +532,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
                         !searchQuery
                       ) {
                         return (
-                          <Grid item xs="auto">
+                          <Grid item xs="auto" key={k}>
                             <WalletCharacter
                               key={k}
                               nft={nft}
