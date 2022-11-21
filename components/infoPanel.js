@@ -348,7 +348,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
 
   // Unstaked in Wallet
   const unstaked = _.filter(aliveWagdies, (wagdie) => {
-    return !wagdie.location;
+    return !wagdie.location && !wagdie.isBurned;
   });
 
   return (
