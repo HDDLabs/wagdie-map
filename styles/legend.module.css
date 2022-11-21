@@ -150,6 +150,23 @@
   opacity: 1;
 }
 
+.stakeButtonDisabled {
+  color: #ffffff;
+  background: gray;
+  border: 2px solid gray;
+  border-radius: 4px;
+  width: auto;
+  height: 30px;
+  padding: 4px;
+  text-align: center;
+  opacity: 0.8;
+  font-family: EskapadeFraktur-Black;
+}
+
+.stakeButtonDisabled:hover {
+  cursor: not-allowed;
+}
+
 .stakeButtonLocked {
   color: #ffffff;
   background: #e53e3e;
