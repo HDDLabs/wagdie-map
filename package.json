@@ -30,7 +30,7 @@
     "react-leaflet": "^4.0.1",
     "react-spring": "^9.5.2",
     "react-tooltip": "^4.2.21",
-    "wagmi": "^0.6.6"
+    "wagmi": "^0.8.2"
   },
   "devDependencies": {
     "eslint": "8.18.0",

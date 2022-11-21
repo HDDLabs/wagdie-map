@@ -16,13 +16,13 @@ import InfoPanel from "../components/infoPanel";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
 import { WalletButton } from "../components/walletButton";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import { getLocations } from "../lib/locationMiddleware";
-import { publicProvider } from "wagmi/providers/public";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
 
 const { provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
+  alchemyProvider({ apiKey: "PCrEzTFJfyhbo7mybElzgrA7xyLLQhzc" }),
 ]);
 
 const client = createClient({
