@@ -14,6 +14,7 @@ import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import AnimateHeight from "react-animate-height";
 import Fuse from "fuse.js";
+import LoadingOverlay from "@ronchalant/react-loading-overlay";
 import _ from "lodash";
 import { getAccount } from "../lib/userTokensMiddleware";
 import locationStakingContractABI from "../utils/abis/wagdieLocationABI.json";
@@ -243,6 +244,8 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
 
   const [searchQuery, setSearchQuery] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   // Styles
   const typographyStyle = {
     fontFamily: "EskapadeFraktur-Black",
@@ -280,14 +283,17 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
   // Handlers
 
   const handleStakeButtonClick = () => {
+    setLoading(true);
     stakeWagdies.write?.();
   };
 
   const handleUnstakeButtonClick = () => {
+    setLoading(true);
     unstakeWagdies.write?.();
   };
 
   const handleMoveButtonClick = () => {
+    setLoading(true);
     changeWagdieLocations.write?.();
   };
 
@@ -298,7 +304,14 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     args: [wagdiesToStake],
   });
 
-  const stakeWagdies = useContractWrite(prepareStakeWagdies.config);
+  const stakeWagdies = useContractWrite({
+    ...prepareStakeWagdies.config,
+    onSettled(data, error) {
+      setLoading(false);
+      handleClose();
+      console.log("Settled", { data, error });
+    },
+  });
 
   const prepareUnstakeWagdies = usePrepareContractWrite({
     address: "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
@@ -307,7 +320,14 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     args: [wagdiesToUnstake],
   });
 
-  const unstakeWagdies = useContractWrite(prepareUnstakeWagdies.config);
+  const unstakeWagdies = useContractWrite({
+    ...prepareUnstakeWagdies.config,
+    onSettled(data, error) {
+      setLoading(false);
+      handleClose();
+      console.log("Settled", { data, error });
+    },
+  });
 
   const prepareChangeWagdieLocations = usePrepareContractWrite({
     address: "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
@@ -316,10 +336,16 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     args: [wagdiesToMove],
   });
 
-  const changeWagdieLocations = useContractWrite(
-    prepareChangeWagdieLocations.config
-  );
+  const changeWagdieLocations = useContractWrite({
+    ...prepareChangeWagdieLocations.config,
+    onSettled(data, error) {
+      setLoading(false);
+      handleClose();
+      console.log("Settled", { data, error });
+    },
+  });
 
+  // ViewModel Data
   const hasEligibleWagdies = accountData.alive;
 
   // Search
@@ -329,7 +355,6 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     keys: ["name", "id"],
   });
 
-  // Data
   const result = hasEligibleWagdies
     ? fuse?.search(searchQuery)?.map((s) => s.item.id)
     : undefined;
@@ -356,202 +381,217 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
       <Modal open={!!accountData} onClose={handleClose}>
         {hasEligibleWagdies ? (
           <Box sx={modalStyle}>
-            <Grid container direction="column" spacing={3}>
-              <Grid item xs="auto">
-                <Grid container direction="row">
-                  <Grid item xs="auto">
-                    <div className={styles.search}>
-                      <input
-                        type="text"
-                        name="search"
-                        placeholder="search"
-                        value={searchQuery}
-                        onChange={(event) => {
-                          setSearchQuery(event.target.value);
-                        }}
-                      />
-                    </div>
+            <LoadingOverlay
+              active={loading}
+              spinner={loading}
+              styles={{
+                overlay: (base) => ({
+                  ...base,
+                  background: "#353535",
+                  opacity: 0.8,
+                }),
+              }}
+              text="Your characters are travelling the Forsaken Lands"
+            >
+              <Grid container direction="column" spacing={3}>
+                <Grid item xs="auto">
+                  <Grid container direction="row">
+                    <Grid item xs="auto">
+                      <div className={styles.search}>
+                        <input
+                          type="text"
+                          name="search"
+                          placeholder="search"
+                          value={searchQuery}
+                          onChange={(event) => {
+                            setSearchQuery(event.target.value);
+                          }}
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs="auto">
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Grid item xs="auto">
+                      <Typography
+                        sx={typographyStyle}
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Stake Characters
+                      </Typography>
+                    </Grid>
+                    <Grid item xs="auto">
+                      <div
+                        className={
+                          wagdiesToStake.length > 0
+                            ? styles.stakeButton
+                            : styles.stakeButtonDisabled
+                        }
+                        onClick={handleStakeButtonClick}
+                      >
+                        STAKE
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs="auto">
+                  <Grid container direction="row" alignItems="center">
+                    {unstaked?.length > 0 ? (
+                      unstaked.map((nft, k) => {
+                        if (
+                          (searchQuery && _.includes(result, nft.id)) ||
+                          !searchQuery
+                        ) {
+                          return (
+                            <Grid item xs="auto" key={k}>
+                              <WalletCharacter
+                                key={k}
+                                nft={nft}
+                                locationID={locationID}
+                                wagdieArray={wagdiesToStake}
+                                setWagdieArray={setWagdiesToStake}
+                              ></WalletCharacter>
+                            </Grid>
+                          );
+                        }
+                      })
+                    ) : (
+                      <div>
+                        <p>You have no characters to stake at this location</p>
+                      </div>
+                    )}
+                  </Grid>
+                </Grid>
+                <Grid item xs="auto">
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Grid item xs="auto">
+                      <Typography
+                        sx={typographyStyle}
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Unstake Characters
+                      </Typography>
+                    </Grid>
+                    <Grid item xs="auto">
+                      <div
+                        className={
+                          wagdiesToUnstake.length > 0
+                            ? styles.stakeButton
+                            : styles.stakeButtonDisabled
+                        }
+                        onClick={handleUnstakeButtonClick}
+                      >
+                        UNSTAKE
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs="auto">
+                  <Grid container direction="row" alignItems="center">
+                    {staked?.length > 0 ? (
+                      staked.map((nft, k) => {
+                        if (
+                          (searchQuery && _.includes(result, nft.id)) ||
+                          !searchQuery
+                        ) {
+                          return (
+                            <Grid item xs="auto" key={k}>
+                              <WalletCharacter
+                                key={k}
+                                nft={nft}
+                                locationID={locationID}
+                                wagdieArray={wagdiesToUnstake}
+                                setWagdieArray={setWagdiesToUnstake}
+                              ></WalletCharacter>
+                            </Grid>
+                          );
+                        }
+                      })
+                    ) : (
+                      <div>
+                        <p>
+                          You have no characters to unstake at this location
+                        </p>
+                      </div>
+                    )}
+                  </Grid>
+                </Grid>
+                <Grid item xs="auto">
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Grid item xs="auto">
+                      <Typography
+                        sx={typographyStyle}
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Move Characters
+                      </Typography>
+                    </Grid>
+                    <Grid item xs="auto">
+                      <div
+                        className={
+                          wagdiesToMove.length > 0
+                            ? styles.stakeButton
+                            : styles.stakeButtonDisabled
+                        }
+                        onClick={handleMoveButtonClick}
+                      >
+                        MOVE
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs="auto">
+                  <Grid container direction="row" alignItems="center">
+                    {stakedElsewhere?.length > 0 ? (
+                      stakedElsewhere.map((nft, k) => {
+                        if (
+                          (searchQuery && _.includes(result, nft.id)) ||
+                          !searchQuery
+                        ) {
+                          return (
+                            <Grid item xs="auto" key={k}>
+                              <WalletCharacter
+                                key={k}
+                                nft={nft}
+                                locationID={locationID}
+                                wagdieArray={wagdiesToMove}
+                                setWagdieArray={setWagdiesToMove}
+                              ></WalletCharacter>
+                            </Grid>
+                          );
+                        }
+                      })
+                    ) : (
+                      <div>
+                        <p>You have no characters to move to this location</p>
+                      </div>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs="auto">
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                >
-                  <Grid item xs="auto">
-                    <Typography
-                      sx={typographyStyle}
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Stake Characters
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="auto">
-                    <div
-                      className={
-                        wagdiesToStake.length > 0
-                          ? styles.stakeButton
-                          : styles.stakeButtonDisabled
-                      }
-                      onClick={handleStakeButtonClick}
-                    >
-                      STAKE
-                    </div>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs="auto">
-                <Grid container direction="row" alignItems="center">
-                  {unstaked?.length > 0 ? (
-                    unstaked.map((nft, k) => {
-                      if (
-                        (searchQuery && _.includes(result, nft.id)) ||
-                        !searchQuery
-                      ) {
-                        return (
-                          <Grid item xs="auto" key={k}>
-                            <WalletCharacter
-                              key={k}
-                              nft={nft}
-                              locationID={locationID}
-                              wagdieArray={wagdiesToStake}
-                              setWagdieArray={setWagdiesToStake}
-                            ></WalletCharacter>
-                          </Grid>
-                        );
-                      }
-                    })
-                  ) : (
-                    <div>
-                      <p>You have no characters to stake at this location</p>
-                    </div>
-                  )}
-                </Grid>
-              </Grid>
-              <Grid item xs="auto">
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                >
-                  <Grid item xs="auto">
-                    <Typography
-                      sx={typographyStyle}
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Unstake Characters
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="auto">
-                    <div
-                      className={
-                        wagdiesToUnstake.length > 0
-                          ? styles.stakeButton
-                          : styles.stakeButtonDisabled
-                      }
-                      onClick={handleUnstakeButtonClick}
-                    >
-                      UNSTAKE
-                    </div>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs="auto">
-                <Grid container direction="row" alignItems="center">
-                  {staked?.length > 0 ? (
-                    staked.map((nft, k) => {
-                      if (
-                        (searchQuery && _.includes(result, nft.id)) ||
-                        !searchQuery
-                      ) {
-                        return (
-                          <Grid item xs="auto" key={k}>
-                            <WalletCharacter
-                              key={k}
-                              nft={nft}
-                              locationID={locationID}
-                              wagdieArray={wagdiesToUnstake}
-                              setWagdieArray={setWagdiesToUnstake}
-                            ></WalletCharacter>
-                          </Grid>
-                        );
-                      }
-                    })
-                  ) : (
-                    <div>
-                      <p>You have no characters to unstake at this location</p>
-                    </div>
-                  )}
-                </Grid>
-              </Grid>
-              <Grid item xs="auto">
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                >
-                  <Grid item xs="auto">
-                    <Typography
-                      sx={typographyStyle}
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Move Characters
-                    </Typography>
-                  </Grid>
-                  <Grid item xs="auto">
-                    <div
-                      className={
-                        wagdiesToMove.length > 0
-                          ? styles.stakeButton
-                          : styles.stakeButtonDisabled
-                      }
-                      onClick={handleMoveButtonClick}
-                    >
-                      MOVE
-                    </div>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs="auto">
-                <Grid container direction="row" alignItems="center">
-                  {stakedElsewhere?.length > 0 ? (
-                    stakedElsewhere.map((nft, k) => {
-                      if (
-                        (searchQuery && _.includes(result, nft.id)) ||
-                        !searchQuery
-                      ) {
-                        return (
-                          <Grid item xs="auto" key={k}>
-                            <WalletCharacter
-                              key={k}
-                              nft={nft}
-                              locationID={locationID}
-                              wagdieArray={wagdiesToMove}
-                              setWagdieArray={setWagdiesToMove}
-                            ></WalletCharacter>
-                          </Grid>
-                        );
-                      }
-                    })
-                  ) : (
-                    <div>
-                      <p>You have no characters to move to this location</p>
-                    </div>
-                  )}
-                </Grid>
-              </Grid>
-            </Grid>
+            </LoadingOverlay>
           </Box>
         ) : (
           <Box sx={noWagdiesModalStyle}>

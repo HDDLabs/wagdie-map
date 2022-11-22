@@ -161,6 +161,7 @@
   text-align: center;
   opacity: 0.8;
   font-family: EskapadeFraktur-Black;
+  pointer-events: none;
 }
 
 .stakeButtonDisabled:hover {
