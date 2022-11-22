@@ -22,7 +22,7 @@ import styles from "../styles/Home.module.css";
 import { useContext } from "react";
 
 const { provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: "PCrEzTFJfyhbo7mybElzgrA7xyLLQhzc" }),
+  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
 ]);
 
 const client = createClient({
