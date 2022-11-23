@@ -1,4 +1,4 @@
-import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useEffect, useState } from "react";
 
 import { InjectedConnector } from "wagmi/connectors/injected";
@@ -6,8 +6,7 @@ import styles from "../styles/walletButton.module.css";
 
 export const WalletButton = () => {
   const [_isConnected, _setIsConnected] = useState(false);
-  const { address, isConnected } = useAccount();
-  const { data: ensName } = useEnsName({ address });
+  const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { connect } = useConnect({
     connector: new InjectedConnector(),

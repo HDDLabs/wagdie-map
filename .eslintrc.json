@@ -4,6 +4,8 @@
   "rules": {
     "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
+    "@next/next/no-img-element": "off",
+    "jsx-a11y/alt-text": "off",
     "unused-imports/no-unused-vars": [
       "warn",
       {
