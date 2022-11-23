@@ -21,6 +21,7 @@ a {
   background: #333 !important;
   color: #faebd7 !important;
   text-align: center !important;
+  font-family: EskapadeFraktur-Black !important;
 }
 
 .leaflet-container a {

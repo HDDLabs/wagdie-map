@@ -20,12 +20,24 @@ const Leaflet = require("leaflet");
 
 const BaseMap = ({ mapData }) => {
   const [position, setPosition] = useState(null);
-  const { setSelectedLocation } = useContext(AppContext);
+  const { setSelectedLocation, selectedLocation } = useContext(AppContext);
   const { layers } = useContext(AppContext);
   const locationsLayerGroup = useRef();
   const burnsLayerGroup = useRef();
   const battlesLayerGroup = useRef();
   const deathsLayerGroup = useRef();
+
+  const MoveMapToMarker = () => {
+    const map = useMap();
+
+    useEffect(() => {
+      if (selectedLocation.htmlcoordinates) {
+        map.flyTo(selectedLocation.htmlcoordinates, map.getZoom());
+      }
+    }, [map]);
+
+    return <></>;
+  };
 
   const CoordinateDetector = () => {
     const markerRef = useRef();
@@ -100,6 +112,7 @@ const BaseMap = ({ mapData }) => {
     iconUrl: "../images/mapicons/icon_location.png",
     iconSize: [30, 42],
     iconAnchor: [15, 42],
+    popupAnchor: [0, -40],
   });
 
   const burnIcon = Leaflet.icon({
@@ -154,8 +167,13 @@ const BaseMap = ({ mapData }) => {
               click: (_e) => {
                 handleMarkerClick(location);
               },
+              mouseover: (event) => {
+                event.target.openPopup();
+              },
             }}
-          ></Marker>
+          >
+            <Popup>{location.name}</Popup>
+          </Marker>
         ))}
       </LayerGroup>
 
@@ -205,6 +223,7 @@ const BaseMap = ({ mapData }) => {
       </LayerGroup>
 
       <MapController />
+      <MoveMapToMarker />
       {isDev ? <CoordinateDetector></CoordinateDetector> : null}
     </MapContainer>
   );
