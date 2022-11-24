@@ -15,10 +15,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import AppContext from "../components/context";
 import { isDev } from "../components/context";
+import { useRouter } from "next/router";
 
 const Leaflet = require("leaflet");
 
 const BaseMap = ({ mapData }) => {
+  const router = useRouter();
   const [position, setPosition] = useState(null);
   const { setSelectedLocation, selectedLocation } = useContext(AppContext);
   const { layers } = useContext(AppContext);
@@ -96,7 +98,10 @@ const BaseMap = ({ mapData }) => {
     setSelectedLocation(location);
   };
 
-  const mapCenter = [500, 500];
+  const mapCenter = [
+    router.query.xCoordinate ?? 500,
+    router.query.yCoordinate ?? 500,
+  ];
   const imageBounds = [
     [0, 0],
     [1000, 1000],
