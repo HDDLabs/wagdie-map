@@ -328,7 +328,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
 
   async function handleSuccess(tx) {
     const _ = await tx.wait(1);
-    toast.success("Your travel through the Forsaken Lands was successful");
+    toast.success("Your travel through the Forsaken Lands was successful!");
     setIsLoading(false);
     handleClose();
   }
@@ -389,7 +389,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
                   opacity: 0.8,
                 }),
               }}
-              text="Your characters are travelling the Forsaken Lands"
+              text="Your characters are traveling the Forsaken Lands..."
             >
               <Grid container direction="column" spacing={3}>
                 <Grid item xs="auto">
