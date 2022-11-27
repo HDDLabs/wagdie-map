@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
-import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import AnimateHeight from "react-animate-height";
 import Fuse from "fuse.js";
@@ -19,6 +18,9 @@ import _ from "lodash";
 import { getAccount } from "../lib/userTokensMiddleware";
 import locationStakingContractABI from "../utils/abis/wagdieLocationABI.json";
 import styles from "../styles/legend.module.css";
+import { toast } from "react-toastify";
+import { useAccount } from "wagmi";
+import { useWriteToContract } from "../lib/interactWithContract";
 
 export default function InfoPanel({ infoPanelContent }) {
   const [height, setHeight] = useState(0);
@@ -244,7 +246,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Styles
   const typographyStyle = {
@@ -280,70 +282,66 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     p: 4,
   };
 
+  const { write: stakeWagdies } = useWriteToContract(
+    "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
+    locationStakingContractABI,
+    "stakeWagdies",
+    [wagdiesToStake],
+    { onSuccess: handleSuccess, onError: handleError }
+  );
+
+  const { write: unstakeWagdies } = useWriteToContract(
+    "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
+    locationStakingContractABI,
+    "unstakeWagdies",
+    [wagdiesToUnstake],
+    { onSuccess: handleSuccess, onError: handleError }
+  );
+
+  const { write: changeWagdieLocations } = useWriteToContract(
+    "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
+    locationStakingContractABI,
+    "changeWagdieLocations",
+    [wagdiesToMove],
+    { onSuccess: handleSuccess, onError: handleError }
+  );
+
   // Handlers
 
   const handleStakeButtonClick = () => {
-    setLoading(true);
-    stakeWagdies.write?.();
+    toast.info("Sign the transaction in your wallet…");
+    setIsLoading(true);
+    stakeWagdies();
   };
 
   const handleUnstakeButtonClick = () => {
-    setLoading(true);
-    unstakeWagdies.write?.();
+    toast.info("Sign the transaction in your wallet…");
+    setIsLoading(true);
+    unstakeWagdies();
   };
 
   const handleMoveButtonClick = () => {
-    setLoading(true);
-    changeWagdieLocations.write?.();
+    toast.info("Sign the transaction in your wallet…");
+    setIsLoading(true);
+    changeWagdieLocations();
   };
 
-  const prepareStakeWagdies = usePrepareContractWrite({
-    address: "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
-    abi: locationStakingContractABI,
-    functionName: "stakeWagdies",
-    args: [wagdiesToStake],
-  });
+  async function handleSuccess(tx) {
+    const _ = await tx.wait(1);
+    toast.success("Your travel through the Forsaken Lands was successful");
+    setIsLoading(false);
+    handleClose();
+  }
 
-  const stakeWagdies = useContractWrite({
-    ...prepareStakeWagdies.config,
-    onSettled(data, error) {
-      setLoading(false);
-      handleClose();
-      console.log("Settled", { data, error });
-    },
-  });
-
-  const prepareUnstakeWagdies = usePrepareContractWrite({
-    address: "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
-    abi: locationStakingContractABI,
-    functionName: "unstakeWagdies",
-    args: [wagdiesToUnstake],
-  });
-
-  const unstakeWagdies = useContractWrite({
-    ...prepareUnstakeWagdies.config,
-    onSettled(data, error) {
-      setLoading(false);
-      handleClose();
-      console.log("Settled", { data, error });
-    },
-  });
-
-  const prepareChangeWagdieLocations = usePrepareContractWrite({
-    address: "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
-    abi: locationStakingContractABI,
-    functionName: "changeWagdieLocations",
-    args: [wagdiesToMove],
-  });
-
-  const changeWagdieLocations = useContractWrite({
-    ...prepareChangeWagdieLocations.config,
-    onSettled(data, error) {
-      setLoading(false);
-      handleClose();
-      console.log("Settled", { data, error });
-    },
-  });
+  function handleError(err) {
+    if (err.code === "ACTION_REJECTED") {
+      toast.error("Transaction rejected.");
+    } else {
+      toast.error("Error encountered");
+      console.log(err);
+    }
+    setIsLoading(false);
+  }
 
   // ViewModel Data
   const hasEligibleWagdies = accountData.alive;
@@ -378,12 +376,12 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
 
   return (
     <div>
-      <Modal open={!!accountData} onClose={handleClose}>
+      <Modal open={!!accountData} onClose={isLoading ? undefined : handleClose}>
         {hasEligibleWagdies ? (
           <Box sx={modalStyle}>
             <LoadingOverlay
-              active={loading}
-              spinner={loading}
+              active={isLoading}
+              spinner={isLoading}
               styles={{
                 overlay: (base) => ({
                   ...base,

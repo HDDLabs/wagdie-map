@@ -15,6 +15,7 @@ import Head from "next/head";
 import InfoPanel from "../components/infoPanel";
 import { LayerPanel } from "../components/layerPanel";
 import Map from "../components/map";
+import { ToastContainer } from "react-toastify";
 import { WalletButton } from "../components/walletButton";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { getLocations } from "../lib/locationMiddleware";
@@ -35,24 +36,38 @@ export default function Home({ mapData }) {
   const { selectedLocation } = useContext(AppContext);
 
   return (
-    <WagmiConfig client={client}>
-      <div className={styles.container}>
-        <Head>
-          <title>World of WAGDIE</title>
-          <meta name="description" content="Map of the World of WAGDIE." />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+    <div>
+      <WagmiConfig client={client}>
+        <div className={styles.container}>
+          <Head>
+            <title>World of WAGDIE</title>
+            <meta name="description" content="Map of the World of WAGDIE." />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
 
-        <main className={styles.main}>
-          <InfoPanel infoPanelContent={selectedLocation}></InfoPanel>
-          <WalletButton></WalletButton>
-          <LayerPanel></LayerPanel>
-          <div className={styles.map}>
-            <Map mapData={mapData} />
-          </div>
-        </main>
-      </div>
-    </WagmiConfig>
+          <main className={styles.main}>
+            <InfoPanel infoPanelContent={selectedLocation}></InfoPanel>
+            <WalletButton></WalletButton>
+            <LayerPanel></LayerPanel>
+            <div className={styles.map}>
+              <Map mapData={mapData} />
+            </div>
+          </main>
+        </div>
+      </WagmiConfig>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+    </div>
   );
 }
 

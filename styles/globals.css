@@ -43,3 +43,14 @@ a.leaflet-control-zoom-out {
   color: salmon !important;
   font-family: EskapadeFraktur-Black !important;
 }
+
+.Toastify__toast-body {
+  background: #333 !important;
+  color: #faebd7 !important;
+  font-family: EskapadeFraktur-Black !important;
+}
+
+.Toastify__toast-theme--dark {
+  background: #333 !important;
+  color: #faebd7 !important;
+}
