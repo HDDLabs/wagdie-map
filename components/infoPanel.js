@@ -8,9 +8,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
-import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import AnimateHeight from "react-animate-height";
 import Fuse from "fuse.js";
@@ -20,7 +19,8 @@ import { getAccount } from "../lib/userTokensMiddleware";
 import locationStakingContractABI from "../utils/abis/wagdieLocationABI.json";
 import styles from "../styles/legend.module.css";
 import { toast } from "react-toastify";
-import { writeToContract } from "../lib/interactWithContract";
+import { useAccount } from "wagmi";
+import { useWriteToContract } from "../lib/interactWithContract";
 
 export default function InfoPanel({ infoPanelContent }) {
   const [height, setHeight] = useState(0);
@@ -282,7 +282,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     p: 4,
   };
 
-  const { write: stakeWagdies } = writeToContract(
+  const { write: stakeWagdies } = useWriteToContract(
     "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
     locationStakingContractABI,
     "stakeWagdies",
@@ -290,7 +290,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     { onSuccess: handleSuccess, onError: handleError }
   );
 
-  const { write: unstakeWagdies } = writeToContract(
+  const { write: unstakeWagdies } = useWriteToContract(
     "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
     locationStakingContractABI,
     "unstakeWagdies",
@@ -298,7 +298,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
     { onSuccess: handleSuccess, onError: handleError }
   );
 
-  const { write: changeWagdieLocations } = writeToContract(
+  const { write: changeWagdieLocations } = useWriteToContract(
     "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
     locationStakingContractABI,
     "changeWagdieLocations",
@@ -327,7 +327,7 @@ function YourCharactersModal({ locationID, accountData, handleClose }) {
   };
 
   async function handleSuccess(tx) {
-    const txReceipt = await tx.wait(1);
+    const _ = await tx.wait(1);
     toast.success("Your travel through the Forsaken Lands was successful");
     setIsLoading(false);
     handleClose();
