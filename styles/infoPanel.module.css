@@ -212,6 +212,19 @@
   font-family: EskapadeFraktur-Black;
 }
 
+.noWagdiesModalContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  width: auto;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+  padding: 20px;
+}
+
 .modalContainer {
   position: absolute;
   left: 50%;
