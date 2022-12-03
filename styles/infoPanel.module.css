@@ -203,12 +203,55 @@
 }
 
 .search {
+  padding: 8px;
 }
 
 .search > input {
   padding: 8px;
   color: #353535;
   font-family: EskapadeFraktur-Black;
+}
+
+.modalContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+}
+
+.searchContainer {
+  height: auto;
+}
+
+.scrollingContentContainer {
+  height: 650px;
+  width: 652px;
+  overflow-y: scroll;
+}
+
+.stickyContent {
+  position: sticky;
+  top: -0.8px;
+  z-index: 10;
+  background-color: #222;
+  color: #faebd7;
+}
+
+.stickyContentTitle {
+  margin: 0;
+}
+
+.placeholderContent {
+  /* height: 1000px; */
+  background-color: #333;
+}
+
+.placeholderTitle {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 @media (max-width: 600px) {
