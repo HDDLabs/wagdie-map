@@ -203,13 +203,20 @@
 }
 
 .search {
-  padding: 8px;
 }
 
 .search > input {
   padding: 8px;
+  background-color: #faebd7;
   color: #353535;
   font-family: EskapadeFraktur-Black;
+  width: 100%;
+  outline: none;
+  border-color: #353535;
+}
+
+.searchContainer {
+  height: auto;
 }
 
 .noWagdiesModalContainer {
@@ -235,12 +242,8 @@
   font-family: EskapadeFraktur-Black;
 }
 
-.searchContainer {
-  height: auto;
-}
-
 .scrollingContentContainer {
-  height: 650px;
+  height: 600px;
   width: 652px;
   overflow-y: scroll;
 }
@@ -258,13 +261,19 @@
 }
 
 .placeholderContent {
-  /* height: 1000px; */
   background-color: #333;
 }
 
-.placeholderTitle {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+.contentContainer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.headerContainer {
+  padding-left: 20px;
+  padding-right: 50px;
 }
 
 @media (max-width: 600px) {

@@ -102,6 +102,7 @@ const BaseMap = ({ mapData }) => {
     router.query.xCoordinate ?? 500,
     router.query.yCoordinate ?? 500,
   ];
+
   const imageBounds = [
     [0, 0],
     [1000, 1000],
