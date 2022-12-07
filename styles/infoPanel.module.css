@@ -207,8 +207,73 @@
 
 .search > input {
   padding: 8px;
+  background-color: #faebd7;
   color: #353535;
   font-family: EskapadeFraktur-Black;
+  width: 100%;
+  outline: none;
+  border-color: #353535;
+}
+
+.searchContainer {
+  height: auto;
+}
+
+.noWagdiesModalContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  width: auto;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+  padding: 20px;
+}
+
+.modalContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+}
+
+.scrollingContentContainer {
+  height: 600px;
+  width: 652px;
+  overflow-y: scroll;
+}
+
+.stickyContent {
+  position: sticky;
+  top: -0.8px;
+  z-index: 10;
+  background-color: #222;
+  color: #faebd7;
+}
+
+.stickyContentTitle {
+  margin: 0;
+}
+
+.placeholderContent {
+  background-color: #333;
+}
+
+.contentContainer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.headerContainer {
+  padding-left: 20px;
+  padding-right: 50px;
 }
 
 @media (max-width: 600px) {
