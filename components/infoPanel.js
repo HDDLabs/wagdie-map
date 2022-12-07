@@ -1,12 +1,4 @@
-import {
-  AppBar,
-  Grid,
-  Modal,
-  Tab,
-  Tabs,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { AppBar, Grid, Tab, Tabs, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
