@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Fuse from "fuse.js";
 import LoadingOverlay from "@ronchalant/react-loading-overlay";
 import locationStakingContractABI from "../utils/abis/wagdieLocationABI.json";
-import styles from "../styles/infoPanel.module.css";
+import styles from "../styles/stakingDialog.module.css";
 import { toast } from "react-toastify";
 import { useWriteToContract } from "../lib/interactWithContract";
 
@@ -152,7 +152,7 @@ export default function StakingDialog({
             }}
             text="Your characters are traveling the Forsaken Lands..."
           >
-            <div className={styles.placeholderContent}>
+            <div className={styles.allContentContainer}>
               <section className={styles.stickyContent}>
                 <img
                   className={styles.borderLeft}
