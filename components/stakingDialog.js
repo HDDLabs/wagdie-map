@@ -99,6 +99,7 @@ export default function StakingDialog({
   const ActionButtons = {
     0: (
       <ActionButton
+        imageURL={"../images/stakingdialog/bt-stake.png"}
         wagdies={wagdiesToStake}
         clickHandler={handleStakeButtonClick}
         selectedTab={selectedTab}
@@ -106,6 +107,7 @@ export default function StakingDialog({
     ),
     1: (
       <ActionButton
+        imageURL={"../images/stakingdialog/bt-unstake.png"}
         wagdies={wagdiesToUnstake}
         clickHandler={handleUnstakeButtonClick}
         selectedTab={selectedTab}
@@ -113,6 +115,7 @@ export default function StakingDialog({
     ),
     2: (
       <ActionButton
+        imageURL={"../images/stakingdialog/bt-move.png"}
         wagdies={wagdiesToMove}
         clickHandler={handleMoveButtonClick}
         selectedTab={selectedTab}
@@ -294,17 +297,7 @@ function TabbedContent(props) {
 }
 
 function ActionButton(props) {
-  const { wagdies, selectedTab, clickHandler } = props;
-
-  let imageURL = "";
-
-  if (selectedTab === 0) {
-    imageURL = "../images/stakingdialog/bt-stake.png";
-  } else if (selectedTab === 1) {
-    imageURL = "../images/stakingdialog/bt-unstake.png";
-  } else {
-    imageURL = "../images/stakingdialog/bt-move.png";
-  }
+  const { imageURL, wagdies, clickHandler } = props;
 
   return (
     <div className={styles.actionButtonContainer}>
