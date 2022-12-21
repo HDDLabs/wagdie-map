@@ -1,10 +1,10 @@
-import { Grid, Modal, Tooltip, Typography } from "@mui/material";
+import { AppBar, Grid, Modal, Tab, Tabs, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 
 import Fuse from "fuse.js";
 import LoadingOverlay from "@ronchalant/react-loading-overlay";
 import locationStakingContractABI from "../utils/abis/wagdieLocationABI.json";
-import styles from "../styles/infoPanel.module.css";
+import styles from "../styles/stakingDialog.module.css";
 import { toast } from "react-toastify";
 import { useWriteToContract } from "../lib/interactWithContract";
 
@@ -14,13 +14,15 @@ export default function StakingDialog({
   handleClose,
 }) {
   // State
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const [wagdiesToStake, setWagdiesToStake] = React.useState([]);
   const [wagdiesToUnstake, setWagdiesToUnstake] = React.useState([]);
   const [wagdiesToMove, setWagdiesToMove] = React.useState([]);
 
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const [isLoading, setIsLoading] = useState(false);
+  // Contract Hooks
 
   const { write: stakeWagdies } = useWriteToContract(
     "0x616D4635ceCf94597690Cab0Fc159c3A8231C904",
@@ -48,25 +50,9 @@ export default function StakingDialog({
 
   // Handlers
 
-  // Stake
-  const handleStakeButtonClick = () => {
-    toast.info("Sign the transaction in your wallet…");
-    setIsLoading(true);
-    stakeWagdies();
-  };
-
-  // Unstake
-  const handleUnstakeButtonClick = () => {
-    toast.info("Sign the transaction in your wallet…");
-    setIsLoading(true);
-    unstakeWagdies();
-  };
-
-  // Move
-  const handleMoveButtonClick = () => {
-    toast.info("Sign the transaction in your wallet…");
-    setIsLoading(true);
-    changeWagdieLocations();
+  // Tab Click
+  const tabClickHandler = (_e, selectedTab) => {
+    setSelectedTab(selectedTab);
   };
 
   // Success
@@ -88,7 +74,55 @@ export default function StakingDialog({
     setIsLoading(false);
   }
 
+  // Stake
+  const handleStakeButtonClick = () => {
+    toast.info("Sign the transaction in your wallet…");
+    setIsLoading(true);
+    stakeWagdies();
+  };
+
+  // Unstake
+  const handleUnstakeButtonClick = () => {
+    toast.info("Sign the transaction in your wallet…");
+    setIsLoading(true);
+    unstakeWagdies();
+  };
+
+  // Move
+  const handleMoveButtonClick = () => {
+    toast.info("Sign the transaction in your wallet…");
+    setIsLoading(true);
+    changeWagdieLocations();
+  };
+
   // ViewModel Data
+  const ActionButtons = {
+    0: (
+      <ActionButton
+        imageURL={"../images/stakingdialog/bt-stake.png"}
+        wagdies={wagdiesToStake}
+        clickHandler={handleStakeButtonClick}
+        selectedTab={selectedTab}
+      ></ActionButton>
+    ),
+    1: (
+      <ActionButton
+        imageURL={"../images/stakingdialog/bt-unstake.png"}
+        wagdies={wagdiesToUnstake}
+        clickHandler={handleUnstakeButtonClick}
+        selectedTab={selectedTab}
+      ></ActionButton>
+    ),
+    2: (
+      <ActionButton
+        imageURL={"../images/stakingdialog/bt-move.png"}
+        wagdies={wagdiesToMove}
+        clickHandler={handleMoveButtonClick}
+        selectedTab={selectedTab}
+      ></ActionButton>
+    ),
+  };
+
   const hasEligibleWagdies = accountData.alive;
 
   // Search
@@ -101,6 +135,110 @@ export default function StakingDialog({
   const result = hasEligibleWagdies
     ? fuse?.search(searchQuery)?.map((s) => s.item.id)
     : undefined;
+
+  return (
+    <Modal open={!!accountData} onClose={isLoading ? undefined : handleClose}>
+      {hasEligibleWagdies ? (
+        <div className={styles.modalContainer}>
+          <LoadingOverlay
+            active={isLoading}
+            spinner={isLoading}
+            styles={{
+              overlay: (base) => ({
+                ...base,
+                background: "#353535",
+                opacity: 0.8,
+              }),
+            }}
+            text="Your characters are traveling the Forsaken Lands..."
+          >
+            <div className={styles.allContentContainer}>
+              <section className={styles.stickyContent}>
+                <img
+                  className={styles.borderLeft}
+                  src={"../images/border-l.png"}
+                />
+                <img
+                  className={styles.borderRight}
+                  src={"../images/border-r.png"}
+                />
+                <div className={styles.modalTitle}>
+                  <h1>Enter The Forsaken Lands</h1>
+                  {ActionButtons[selectedTab]}
+                </div>
+                <div className={styles.searchContainer}>
+                  <div className={styles.search}>
+                    <input
+                      type="text"
+                      name="search"
+                      placeholder=""
+                      value={searchQuery}
+                      onChange={(event) => {
+                        setSearchQuery(event.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <AppBar position="static" sx={{ backgroundColor: "#222" }}>
+                  <Tabs
+                    TabIndicatorProps={{
+                      sx: { backgroundColor: "salmon" },
+                    }}
+                    variant="fullWidth"
+                    value={selectedTab}
+                    onChange={tabClickHandler}
+                  >
+                    <Tab label="STAKE" />
+                    <Tab label="UNSTAKE" />
+                    <Tab label="MOVE" />
+                  </Tabs>
+                </AppBar>
+              </section>
+              <TabbedContent
+                selectedTab={selectedTab}
+                tabClickHandler={tabClickHandler}
+                accountData={accountData}
+                searchQuery={searchQuery}
+                result={result}
+                locationID={locationID}
+                wagdiesToStake={wagdiesToStake}
+                setWagdiesToStake={setWagdiesToStake}
+                wagdiesToUnstake={wagdiesToUnstake}
+                setWagdiesToUnstake={setWagdiesToUnstake}
+                wagdiesToMove={wagdiesToMove}
+                setWagdiesToMove={setWagdiesToMove}
+              ></TabbedContent>
+            </div>
+          </LoadingOverlay>
+        </div>
+      ) : (
+        <div className={styles.noWagdiesModalContainer}>
+          There were no WAGDIEs found in your wallet
+        </div>
+      )}
+    </Modal>
+  );
+}
+
+function TabPanel(props) {
+  const { children, selectedTab, index } = props;
+  return <div>{selectedTab === index && <div>{children}</div>}</div>;
+}
+
+function TabbedContent(props) {
+  const {
+    selectedTab,
+    accountData,
+    searchQuery,
+    result,
+    locationID,
+    wagdiesToStake,
+    setWagdiesToStake,
+    wagdiesToUnstake,
+    setWagdiesToUnstake,
+    wagdiesToMove,
+    setWagdiesToMove,
+  } = props;
 
   const aliveWagdies = accountData?.alive;
 
@@ -120,143 +258,57 @@ export default function StakingDialog({
   });
 
   return (
-    <Modal open={!!accountData} onClose={isLoading ? undefined : handleClose}>
-      {hasEligibleWagdies ? (
-        <div className={styles.modalContainer}>
-          <LoadingOverlay
-            active={isLoading}
-            spinner={isLoading}
-            styles={{
-              overlay: (base) => ({
-                ...base,
-                background: "#353535",
-                opacity: 0.8,
-              }),
-            }}
-            text="Your characters are traveling the Forsaken Lands..."
-          >
-            <div className={styles.searchContainer}>
-              <div className={styles.search}>
-                <input
-                  type="text"
-                  name="search"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={(event) => {
-                    setSearchQuery(event.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className={styles.scrollingContentContainer}>
-              <div className={styles.placeholderContent}>
-                <section className={styles.stickyContent}>
-                  <Header
-                    wagdiesArray={wagdiesToStake}
-                    handleButtonClick={handleStakeButtonClick}
-                    headerTitle="Stake Characters"
-                    buttonTitle="STAKE"
-                  ></Header>
-                </section>
-                <Content
-                  wagdieDisplayArray={unstaked}
-                  selectedWagdieArray={wagdiesToStake}
-                  setSelectedWagdieArray={setWagdiesToStake}
-                  searchQuery={searchQuery}
-                  result={result}
-                  locationID={locationID}
-                  noWagdiesText="You have no characters to stake at this location"
-                ></Content>
-              </div>
-              <div className={styles.placeholderContent}>
-                <section className={styles.stickyContent}>
-                  <Header
-                    wagdiesArray={wagdiesToUnstake}
-                    handleButtonClick={handleUnstakeButtonClick}
-                    headerTitle="Unstake Characters"
-                    buttonTitle="UNSTAKE"
-                  ></Header>
-                </section>
-                <Content
-                  wagdieDisplayArray={staked}
-                  selectedWagdieArray={wagdiesToUnstake}
-                  setSelectedWagdieArray={setWagdiesToUnstake}
-                  searchQuery={searchQuery}
-                  result={result}
-                  locationID={locationID}
-                  noWagdiesText="You have no characters to unstake at this location"
-                ></Content>
-              </div>
-              <div className={styles.placeholderContent}>
-                <section className={styles.stickyContent}>
-                  <Header
-                    wagdiesArray={wagdiesToMove}
-                    handleButtonClick={handleMoveButtonClick}
-                    headerTitle="Move Characters"
-                    buttonTitle="MOVE"
-                  ></Header>
-                </section>
-                <Content
-                  wagdieDisplayArray={stakedElsewhere}
-                  selectedWagdieArray={wagdiesToMove}
-                  setSelectedWagdieArray={setWagdiesToMove}
-                  searchQuery={searchQuery}
-                  result={result}
-                  locationID={locationID}
-                  noWagdiesText="You have no characters to move to this location"
-                ></Content>
-              </div>
-            </div>
-          </LoadingOverlay>
-        </div>
-      ) : (
-        <div className={styles.noWagdiesModalContainer}>
-          There were no WAGDIEs found in your wallet
-        </div>
-      )}
-    </Modal>
+    <div>
+      <TabPanel selectedTab={selectedTab} index={0}>
+        <Content
+          wagdieDisplayArray={unstaked}
+          selectedWagdieArray={wagdiesToStake}
+          setSelectedWagdieArray={setWagdiesToStake}
+          searchQuery={searchQuery}
+          result={result}
+          locationID={locationID}
+          noWagdiesText="You have no characters to stake at this location"
+        ></Content>
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={1}>
+        <Content
+          wagdieDisplayArray={staked}
+          selectedWagdieArray={wagdiesToUnstake}
+          setSelectedWagdieArray={setWagdiesToUnstake}
+          searchQuery={searchQuery}
+          result={result}
+          locationID={locationID}
+          noWagdiesText="You have no characters to unstake at this location"
+        ></Content>
+      </TabPanel>
+      <TabPanel selectedTab={selectedTab} index={2}>
+        <Content
+          wagdieDisplayArray={stakedElsewhere}
+          selectedWagdieArray={wagdiesToMove}
+          setSelectedWagdieArray={setWagdiesToMove}
+          searchQuery={searchQuery}
+          result={result}
+          locationID={locationID}
+          noWagdiesText="You have no characters to move to this location"
+        ></Content>
+      </TabPanel>
+    </div>
   );
 }
 
-function Header(props) {
-  const { wagdiesArray, handleButtonClick, headerTitle, buttonTitle } = props;
-
-  const typographyStyle = {
-    fontFamily: "EskapadeFraktur-Black",
-    p: 2,
-  };
+function ActionButton(props) {
+  const { imageURL, wagdies, clickHandler } = props;
 
   return (
-    <div className={styles.headerContainer}>
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Grid item xs="auto">
-          <Typography
-            sx={typographyStyle}
-            id="modal-modal-title"
-            variant="h4"
-            component="h2"
-          >
-            {headerTitle}
-          </Typography>
-        </Grid>
-        <Grid item xs="auto">
-          <div
-            className={
-              wagdiesArray.length > 0
-                ? styles.stakeButton
-                : styles.stakeButtonDisabled
-            }
-            onClick={handleButtonClick}
-          >
-            {buttonTitle}
-          </div>
-        </Grid>
-      </Grid>
+    <div className={styles.actionButtonContainer}>
+      <img
+        className={
+          wagdies.length > 0 ? styles.actionButton : styles.actionButtonDisabled
+        }
+        onClick={clickHandler}
+        src={imageURL}
+      ></img>
+      {"(" + wagdies.length + ")"}
     </div>
   );
 }
@@ -304,7 +356,9 @@ function Content(props) {
 function WalletCharacter(props) {
   const { nft, key, locationID, selectedWagdieArray, setSelectedWagdieArray } =
     props;
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(
+    findInFirstIndex(selectedWagdieArray, nft.id)
+  );
 
   const handleAddWagdieClick = () => {
     const tuple = [nft.id, locationID];
@@ -323,9 +377,16 @@ function WalletCharacter(props) {
   return (
     <Tooltip key={key} title={nft.shortName} placement="top" arrow>
       <div className={styles.alive} onClick={() => handleAddWagdieClick()}>
+        <img
+          className={styles.characterFrame}
+          src={"../images/stakingdialog/pfp-frame.png"}
+        />
         <img src={nft.image} />
         {isSelected ? (
-          <div className={styles.walletCharacterStakedOverlay}>ADDED</div>
+          <img
+            className={styles.walletCharacterStakedOverlay}
+            src={"../images/stakingdialog/flag-added.png"}
+          />
         ) : (
           <></>
         )}
@@ -344,4 +405,13 @@ function removeWagdieByTokenIdFromArray(array, item) {
     }
   }
   return newArr;
+}
+
+function findInFirstIndex(array, num) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][0] === num) {
+      return true;
+    }
+  }
+  return false;
 }

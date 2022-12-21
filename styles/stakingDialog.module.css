@@ -1,0 +1,150 @@
+.modalContainer {
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, 0%);
+  background-color: #222;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+  height: 600px;
+  width: 652px;
+  overflow-y: scroll;
+}
+
+.noWagdiesModalContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  width: auto;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+  padding: 20px;
+}
+
+.stickyContent {
+  position: sticky;
+  top: -0.8px;
+  z-index: 10;
+  background-color: #222;
+  color: #faebd7;
+}
+
+.stickyContentTitle {
+  margin: 0;
+}
+
+.allContentContainer {
+}
+
+.borderLeft {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.borderRight {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+.modalTitle {
+  display: flex;
+  font-family: EskapadeFraktur-Black;
+  height: 80px;
+
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 4% 0px 4%;
+  user-select: none;
+
+  color: #faebd7;
+
+  top: 0;
+  left: 0;
+  line-height: 0;
+}
+
+.search {
+}
+
+.search > input {
+  padding: 8px;
+  color: #faebd7;
+  font-family: EskapadeFraktur-Black;
+  width: 100%;
+  height: 45px;
+  outline: none;
+  border-color: #353535;
+  padding-left: 40px;
+  background-image: url("../public/images/stakingdialog/search-bar-l.png"),
+    url("../public/images/stakingdialog/search-bar-r.png"),
+    url("../public/images/stakingdialog/search-bar-m.png");
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-position: left top, right top, left top;
+}
+
+.searchContainer {
+  height: auto;
+  padding: 0px 4% 0px 4%;
+}
+
+.actionButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.actionButton {
+  opacity: 1;
+}
+
+.actionButton:hover {
+  cursor: pointer;
+}
+
+.actionButtonDisabled {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.contentContainer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.alive {
+  display: flex;
+  width: 84px;
+  height: 84px;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.alive:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.characterFrame {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 84px;
+  height: 84px;
+}
+
+.walletCharacterStakedOverlay {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
