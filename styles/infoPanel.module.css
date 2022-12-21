@@ -89,12 +89,14 @@
   display: flex;
   width: 84px;
   height: 84px;
+  border: 2px solid #333;
   position: relative;
   transition: all 0.2s ease-in-out;
 }
 
 .alive:hover {
   cursor: pointer;
+  border: 2px solid #faebd7;
   transform: scale(1.1);
 }
 
