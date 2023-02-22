@@ -4,7 +4,6 @@ import {
   createClient,
   defaultChains,
 } from "wagmi";
-import { getLocations, invalidateCache } from "../lib/locationMiddleware";
 import {
   getWikiBattlesData,
   getWikiBurnsData,
@@ -19,6 +18,7 @@ import Map from "../components/map";
 import { ToastContainer } from "react-toastify";
 import { WalletButton } from "../components/walletButton";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { getLocations } from "../lib/locationMiddleware";
 import styles from "../styles/Home.module.css";
 import { useContext } from "react";
 
@@ -72,7 +72,6 @@ export default function Home({ mapData }) {
 }
 
 export async function getStaticProps() {
-  await invalidateCache();
   const allLocationsData = await getLocations();
   const allBurnsData = await getWikiBurnsData();
   const allBattlesData = await getWikiBattlesData();
